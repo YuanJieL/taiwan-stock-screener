@@ -78,10 +78,10 @@ def fetch_institutional_today(date_str: str) -> pd.DataFrame:
 # ──────────────────────────────────────────────
 def fetch_daily_volume(date_str: str) -> pd.DataFrame:
     """
-    TWSE MI_INDEX3 — 每日收盤行情
+    TWSE STOCK_DAY_ALL — 每日個股收盤行情
     """
     url = (
-        "https://www.twse.com.tw/rwd/zh/afterTrading/MI_INDEX3"
+        "https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY_ALL"
         f"?response=json&date={date_str}"
     )
     try:
