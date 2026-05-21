@@ -1,0 +1,42 @@
+name: 每日台股法人選股更新
+
+on:
+  schedule:
+    # 台股收盤後 18:00 (UTC+8) = 10:00 UTC
+    - cron: "0 10 * * 1-5"
+  workflow_dispatch:          # 允許手動觸發
+
+permissions:
+  contents: write             # 允許 push data/ 與 docs/
+
+jobs:
+  run-screener:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run screener
+        run: python scripts/screener.py
+
+      - name: Build HTML report
+        run: python scripts/build_html.py
+
+      - name: Commit & push results
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: auto-update screener results [skip ci]"
+          file_pattern: "data/latest.json docs/index.html"
+          commit_user_name: "github-actions[bot]"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"

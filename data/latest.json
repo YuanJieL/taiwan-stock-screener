@@ -1,0 +1,34 @@
+{
+  "date": "20260521",
+  "generated_at": "2026-05-21T10:00:00Z",
+  "status": "ok",
+  "stocks": [
+    {
+      "code": "4958",
+      "name": "臻鼎-KY",
+      "close": 439.0,
+      "gain_20d": 112.6,
+      "inst_net_shares": 10609000,
+      "inst_ratio": 17.1,
+      "volume_shares": 62050000
+    },
+    {
+      "code": "2327",
+      "name": "國巨*",
+      "close": 520.0,
+      "gain_20d": 64.0,
+      "inst_net_shares": 24145000,
+      "inst_ratio": 15.2,
+      "volume_shares": 158850000
+    },
+    {
+      "code": "2408",
+      "name": "南亞科",
+      "close": 275.0,
+      "gain_20d": 38.7,
+      "inst_net_shares": 6112000,
+      "inst_ratio": 18.2,
+      "volume_shares": 33590000
+    }
+  ]
+}
