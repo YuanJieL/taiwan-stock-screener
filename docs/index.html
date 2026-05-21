@@ -3,109 +3,247 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>台股三大法人選股 | 2026/05/21</title>
+  <title>台股三大法人選股 | 2026/05/20</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-          background:#f7f7f5;color:#1a1a18;line-height:1.6}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f7f7f5;color:#1a1a18;line-height:1.6}
     a{color:#185FA5;text-decoration:none}
     a:hover{text-decoration:underline}
-    .wrap{max-width:900px;margin:0 auto;padding:2rem 1rem}
-    .header{margin-bottom:1.5rem}
+    .wrap{max-width:1100px;margin:0 auto;padding:2rem 1rem}
     .header h1{font-size:1.5rem;font-weight:500;margin-bottom:.3rem}
-    .header p{font-size:.85rem;color:#666}
-    .meta{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
-    .chip{background:#fff;border:0.5px solid #ddd;border-radius:6px;
-           padding:.35rem .8rem;font-size:.8rem;color:#555}
-    .chip strong{color:#1a1a18}
-    .card{background:#fff;border:0.5px solid #e0e0de;border-radius:12px;
-           overflow:hidden;margin-bottom:1.5rem}
-    tr:hover{background:#fafaf8}
-    .condition{background:#fff;border:0.5px solid #e0e0de;border-radius:8px;
-                padding:.8rem 1rem;font-size:.8rem;color:#666;margin-bottom:1rem}
+    .header p{font-size:.85rem;color:#666;margin-bottom:1.2rem}
+    .condition{background:#fff;border:0.5px solid #e0e0de;border-radius:8px;padding:.8rem 1rem;font-size:.8rem;color:#666;margin-bottom:1rem}
     .condition strong{color:#1a1a18}
+    .meta{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem}
+    .chip{background:#fff;border:0.5px solid #ddd;border-radius:6px;padding:.35rem .8rem;font-size:.8rem;color:#555}
+    .chip strong{color:#1a1a18}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+    .stat{background:#fff;border:0.5px solid #e0e0de;border-radius:8px;padding:.8rem 1rem;text-align:center}
+    .stat .num{font-size:1.6rem;font-weight:500}
+    .stat .label{font-size:.75rem;color:#888;margin-top:2px}
+    .card{background:#fff;border:0.5px solid #e0e0de;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
+    tr:hover{background:#fafaf8}
     .footer{font-size:.75rem;color:#999;margin-top:1.5rem;line-height:1.8}
-    @media(max-width:600px){
-      table thead{display:none}
-      table,tbody,tr,td{display:block}
-      tr{margin-bottom:.8rem;border:0.5px solid #e0e0de;border-radius:8px;padding:.5rem .8rem}
-      td{padding:4px 0 !important}
-      td::before{content:attr(data-label);font-size:11px;color:#999;display:block}
-    }
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="header">
-    <h1>🔍 台股三大法人選股篩選器</h1>
-    <p>自動每個交易日收盤後更新</p>
+    <h1>🔍 台股三大法人選股 + 回測篩選器</h1>
+    <p>每個交易日自動執行 — 篩選條件符合後，回測買入20交易日是否再漲15%</p>
   </div>
 
   <div class="condition">
-    篩選條件：
-    <strong>三大法人淨買量 / 當日總成交量 &gt; 10%</strong>
-    且
-    <strong>近20個交易日收盤漲幅 &gt; 30%</strong>
-    　|　資料來源：台灣證券交易所 TWSE 公開 API
+    <strong>篩選條件：</strong>三大法人淨買超占比 &gt; 10%　且　近20交易日漲幅 &gt; 30%
+    　｜　
+    <strong>回測：</strong>當天收盤買入，20個交易日後漲幅是否 ≥ 15%
   </div>
 
   <div class="meta">
-    <span class="chip">📅 資料日期：<strong>2026/05/21</strong></span>
-    <span class="chip">🕐 更新時間：<strong>2026/05/21 18:00 (台北時間)</strong></span>
-    <span class="chip">✅ 符合條件：<strong>3 檔</strong></span>
+    <span class="chip">📅 資料日期：<strong>2026/05/20</strong></span>
+    <span class="chip">🕐 更新時間：<strong>2026/05/21 14:56（台北時間）</strong></span>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="num" style="color:#27500A;">0</div>
+      <div class="label">✅ 回測通過（+15%以上）</div>
+    </div>
+    <div class="stat">
+      <div class="num" style="color:#BA7517;">13</div>
+      <div class="label">⏳ 觀察中（未滿20交易日）</div>
+    </div>
+    <div class="stat">
+      <div class="num" style="color:#A32D2D;">0</div>
+      <div class="label">❌ 回測未達標</div>
+    </div>
   </div>
 
   <div class="card">
     
+        <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-size:14px;">
           <thead>
             <tr style="background:#f5f5f3;border-bottom:1px solid #ddd;">
-              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;">代號</th>
-              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;">名稱</th>
-              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;">收盤價 (元)</th>
-              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;">近20日漲幅</th>
-              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;">法人買超占比</th>
-              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;">三大法人淨買</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">代號</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">名稱</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">收盤價</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">近20日漲幅</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">法人買超占比</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">回測20日漲幅</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">回測日期</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">回測結果</th>
             </tr>
           </thead>
           <tbody>
             
     <tr>
-      <td style="font-weight:500;padding:10px 12px;">4958</td>
-      <td style="padding:10px 12px;">臻鼎-KY</td>
-      <td style="padding:10px 12px;font-weight:500;font-size:15px;">439.0</td>
-      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+112.6%</td>
-      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#378ADD;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">17.1%</span></td>
-      <td style="padding:10px 12px;color:#185FA5;">+10,609 張</td>
+      <td style="padding:10px 12px;font-weight:500;">6658</td>
+      <td style="padding:10px 12px;">聯策            </td>
+      <td style="padding:10px 12px;font-weight:500;">175.5 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+92.0%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">19.4%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="font-weight:500;padding:10px 12px;">2327</td>
-      <td style="padding:10px 12px;">國巨*</td>
-      <td style="padding:10px 12px;font-weight:500;font-size:15px;">520.0</td>
-      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+64.0%</td>
-      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#378ADD;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">15.2%</span></td>
-      <td style="padding:10px 12px;color:#185FA5;">+24,145 張</td>
+      <td style="padding:10px 12px;font-weight:500;">2492</td>
+      <td style="padding:10px 12px;">華新科          </td>
+      <td style="padding:10px 12px;font-weight:500;">266.0 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+86.7%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">41.8%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="font-weight:500;padding:10px 12px;">2408</td>
-      <td style="padding:10px 12px;">南亞科</td>
-      <td style="padding:10px 12px;font-weight:500;font-size:15px;">275.0</td>
-      <td style="padding:10px 12px;color:#639922;font-weight:500;">+38.7%</td>
-      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#378ADD;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">18.2%</span></td>
-      <td style="padding:10px 12px;color:#185FA5;">+6,112 張</td>
+      <td style="padding:10px 12px;font-weight:500;">6834</td>
+      <td style="padding:10px 12px;">天二科技        </td>
+      <td style="padding:10px 12px;font-weight:500;">66.6 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+76.9%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">71.2%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">3026</td>
+      <td style="padding:10px 12px;">禾伸堂          </td>
+      <td style="padding:10px 12px;font-weight:500;">433.5 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+74.8%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">29.7%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">3048</td>
+      <td style="padding:10px 12px;">益登            </td>
+      <td style="padding:10px 12px;font-weight:500;">67.8 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+67.2%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">12.1%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">7769</td>
+      <td style="padding:10px 12px;">鴻勁            </td>
+      <td style="padding:10px 12px;font-weight:500;">7,675.0 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+61.8%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">17.5%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">2911</td>
+      <td style="padding:10px 12px;">麗嬰房          </td>
+      <td style="padding:10px 12px;font-weight:500;">7.9 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+55.5%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">33.5%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">4958</td>
+      <td style="padding:10px 12px;">臻鼎-KY         </td>
+      <td style="padding:10px 12px;font-weight:500;">469.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+49.0%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">20.2%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">3135</td>
+      <td style="padding:10px 12px;">凌航            </td>
+      <td style="padding:10px 12px;font-weight:500;">195.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+47.0%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">25.0%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">2375</td>
+      <td style="padding:10px 12px;">凱美            </td>
+      <td style="padding:10px 12px;font-weight:500;">122.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+42.8%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">14.8%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">4916</td>
+      <td style="padding:10px 12px;">事欣科          </td>
+      <td style="padding:10px 12px;font-weight:500;">98.8 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+42.2%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">10.8%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">7823</td>
+      <td style="padding:10px 12px;">奧義賽博-KY創   </td>
+      <td style="padding:10px 12px;font-weight:500;">109.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+38.3%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">68.2%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">1762</td>
+      <td style="padding:10px 12px;">中化生          </td>
+      <td style="padding:10px 12px;font-weight:500;">37.8 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+34.1%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">27.3%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
           </tbody>
         </table>
+        </div>
   </div>
 
   <div class="footer">
-    ⚠ 本頁面資訊僅供參考，不構成任何投資建議。股市投資有風險，請自行評估並承擔相關風險。<br/>
-    資料來源：臺灣證券交易所（TWSE）公開資訊。程式自動抓取，數值如有誤差以交易所公告為準。<br/>
+    ⚠ 本頁面資訊僅供參考，不構成任何投資建議。股市投資有風險，請自行評估。<br/>
+    資料來源：臺灣證券交易所（TWSE）公開資訊。<br/>
     <a href="data/latest.json" target="_blank">📄 下載原始 JSON</a>
     &nbsp;|&nbsp;
     <a href="https://www.twse.com.tw" target="_blank">TWSE 官網</a>
-    &nbsp;|&nbsp;
-    <a href="https://github.com" target="_blank">GitHub</a>
   </div>
 </div>
 </body>
