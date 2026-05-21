@@ -169,9 +169,19 @@ def fetch_price_history(stock_code: str, date_str: str) -> list:
 # ──────────────────────────────────────────────
 # 4. 主篩選邏輯
 # ──────────────────────────────────────────────
+def get_prev_trading_day() -> str:
+    today = datetime.today()
+    offset = 1
+    if today.weekday() == 0:
+        offset = 3
+    elif today.weekday() == 6:
+        offset = 2
+    return (today - timedelta(days=offset)).strftime("%Y%m%d")
+
+
 def run_screener(date_str: str | None = None) -> dict:
     if date_str is None:
-        date_str = datetime.today().strftime("%Y%m%d")
+        date_str = get_prev_trading_day()
 
     print(f"\n=== 執行日期：{date_str} ===")
 
