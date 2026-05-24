@@ -1,16 +1,17 @@
 """
-台股三大法人選股篩選器（上市版）
+台股三大法人選股篩選器（上市版 v3）
 篩選條件：
   1. 法人淨買量 / 當日總成交量 > 10%
   2. 近20個交易日漲幅 > 30%
-回測：20交易日前訊號，若遇假日自動往後找最近有資料的交易日
+回測：20交易日前訊號，遇假日自動往後找最近交易日
+資料來源：TWSE 公開資料 API
 """
 
 import requests
 import json
 import time
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 import pandas as pd
 
 HEADERS = {
@@ -35,6 +36,24 @@ def get_prev_trading_day(base_date=None, offset=1) -> str:
     return candidate.strftime("%Y%m%d")
 
 
+def find_valid_trading_day(date_str: str, max_forward_days: int = 7) -> str:
+    """從 date_str 往後找，直到 TWSE 有資料的交易日"""
+    dt = datetime.strptime(date_str, "%Y%m%d")
+    for i in range(max_forward_days + 1):
+        candidate = dt + timedelta(days=i)
+        if candidate.weekday() >= 5:
+            continue
+        cand_str = candidate.strftime("%Y%m%d")
+        df = twse_institutional(cand_str)
+        time.sleep(0.5)
+        if not df.empty:
+            if i > 0:
+                print(f"  歷史日期 {date_str} 無資料，改用 {cand_str}")
+            return cand_str
+    print(f"  找不到有效交易日（{date_str} 往後 {max_forward_days} 天皆無資料）")
+    return date_str
+
+
 def clean_int(s) -> int:
     try:
         return int(str(s).replace(",", "").replace("+", "").replace(" ", ""))
@@ -50,12 +69,11 @@ def clean_float(s) -> float:
         return 0.0
 
 
-# ══════════════════════════════════════════════
-# TWSE API
-# ══════════════════════════════════════════════
-
 def twse_institutional(date_str: str) -> pd.DataFrame:
-    url = f"https://www.twse.com.tw/rwd/zh/fund/T86?response=json&date={date_str}&selectType=ALL"
+    url = (
+        "https://www.twse.com.tw/rwd/zh/fund/T86"
+        f"?response=json&date={date_str}&selectType=ALL"
+    )
     try:
         r = requests.get(url, headers=HEADERS, timeout=15)
         data = r.json()
@@ -66,7 +84,7 @@ def twse_institutional(date_str: str) -> pd.DataFrame:
         df = df.rename(columns={
             "證券代號": "code",
             "證券名稱": "name",
-            "三大法人買賣超股數": "inst_net"
+            "三大法人買賣超股數": "inst_net",
         })
         df["inst_net"] = df["inst_net"].apply(clean_int)
         return df[["code", "name", "inst_net"]].copy()
@@ -76,11 +94,15 @@ def twse_institutional(date_str: str) -> pd.DataFrame:
 
 
 def twse_volume(date_str: str) -> pd.DataFrame:
-    url = f"https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY_ALL?response=json&date={date_str}"
+    url = (
+        "https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY_ALL"
+        f"?response=json&date={date_str}"
+    )
     try:
         r = requests.get(url, headers=HEADERS, timeout=15)
         data = r.json()
         if data.get("stat") != "OK":
+            print(f"[TWSE vol] stat={data.get('stat')}")
             return pd.DataFrame()
         df = pd.DataFrame(data["data"], columns=data["fields"])
         col_map = {}
@@ -102,49 +124,44 @@ def twse_volume(date_str: str) -> pd.DataFrame:
         return pd.DataFrame()
 
 
-def twse_all_prices_month(ym: str) -> dict:
-    """批次抓取當月全市場收盤價 → {code: [close, ...]}"""
-    url = f"https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY_ALL?response=json&date={ym}"
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=20)
-        data = r.json()
-        if data.get("stat") != "OK":
-            return {}
-        df = pd.DataFrame(data["data"], columns=data["fields"])
-        col_map = {}
-        for col in df.columns:
-            if "代號" in col or "代碼" in col:
-                col_map[col] = "code"
-            elif "收盤" in col and "close" not in col_map.values():
-                col_map[col] = "close"
-        df = df.rename(columns=col_map)
-        result = {}
-        for _, row in df.iterrows():
-            code = str(row.get("code", "")).strip()
-            close = clean_float(row.get("close", 0))
-            if code and close > 0:
-                result.setdefault(code, []).append(close)
-        return result
-    except Exception as e:
-        print(f"[TWSE batch] 失敗 {ym}: {e}")
-        return {}
-
-
-def build_price_cache(date_str: str) -> dict:
-    """近兩個月批次價格快取 → {code: [close, ...]}"""
-    cache = {}
+def twse_price_history(stock_code: str, date_str: str) -> list:
+    prices = []
     dt = datetime.strptime(date_str, "%Y%m%d")
     for offset in [1, 0]:
         ym = (dt - timedelta(days=30 * offset)).strftime("%Y%m01")
-        batch = twse_all_prices_month(ym)
-        for code, prices in batch.items():
-            cache.setdefault(code, []).extend(prices)
-        time.sleep(0.5)
+        url = (
+            "https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY"
+            f"?response=json&date={ym}&stockNo={stock_code}"
+        )
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=15)
+            data = r.json()
+            if data.get("stat") == "OK":
+                for row in data.get("data", []):
+                    try:
+                        prices.append(float(row[6].replace(",", "")))
+                    except Exception:
+                        pass
+        except Exception:
+            pass
+        time.sleep(0.2)
+    return prices
+
+
+def build_price_cache(date_str: str, codes: list) -> dict:
+    """對候選股逐一抓近兩個月收盤價 → {code: [close, ...]}"""
+    cache = {}
+    total = len(codes)
+    for i, code in enumerate(codes, 1):
+        prices = twse_price_history(code, date_str)
+        if prices:
+            cache[code] = prices
+        if i % 10 == 0:
+            print(f"  歷史價格進度：{i}/{total}")
     return cache
 
 
 def build_current_price_cache(date_str: str) -> dict:
-    """今日全市場收盤價快取 → {code: close}"""
     vol_df = twse_volume(date_str)
     if vol_df.empty:
         return {}
@@ -155,59 +172,26 @@ def build_current_price_cache(date_str: str) -> dict:
     }
 
 
-# ══════════════════════════════════════════════
-# 遇假日自動往後找有資料的交易日
-# ══════════════════════════════════════════════
-
-def find_valid_trading_day(date_str: str, max_forward_days: int = 7) -> str:
-    """
-    從 date_str 開始往後找，最多找 max_forward_days 天，
-    回傳第一個 TWSE 有資料的交易日
-    """
-    dt = datetime.strptime(date_str, "%Y%m%d")
-    for i in range(max_forward_days + 1):
-        candidate = dt + timedelta(days=i)
-        if candidate.weekday() >= 5:  # 跳過週末
-            continue
-        cand_str = candidate.strftime("%Y%m%d")
-        inst = twse_institutional(cand_str)
-        time.sleep(0.5)
-        if not inst.empty:
-            if i > 0:
-                print(f"  歷史日期 {date_str} 無資料，改用 {cand_str}")
-            return cand_str
-    print(f"  找不到有效交易日（從 {date_str} 往後 {max_forward_days} 天皆無資料）")
-    return date_str
-
-
-# ══════════════════════════════════════════════
-# 篩選邏輯
-# ══════════════════════════════════════════════
-
-def screen_with_cache(inst_df, vol_df, price_cache: dict,
-                      current_cache: dict, hist_mode: bool) -> list:
+def get_candidates(inst_df: pd.DataFrame, vol_df: pd.DataFrame) -> pd.DataFrame:
     if inst_df.empty:
-        return []
-
+        return pd.DataFrame()
     if not vol_df.empty:
         merged = inst_df.merge(vol_df, on="code", how="left")
     else:
         merged = inst_df.copy()
         merged["volume"] = 0.0
         merged["close"] = 0.0
-
     merged["inst_ratio"] = merged.apply(
-        lambda r: (r["inst_net"] / r["volume"] * 100)
-        if r.get("volume", 0) > 0 else 0,
+        lambda r: (r["inst_net"] / r["volume"] * 100) if r.get("volume", 0) > 0 else 0,
         axis=1
     )
+    return merged[merged["inst_ratio"] > 10].copy()
 
-    candidates = merged[merged["inst_ratio"] > 10].copy()
-    print(f"  法人買超>10% 候選：{len(candidates)} 檔")
-    candidates = candidates.head(MAX_CANDIDATES)
 
+def screen_with_cache(candidates: pd.DataFrame, price_cache: dict,
+                      current_cache: dict, hist_mode: bool) -> list:
     results = []
-    for _, row in candidates.iterrows():
+    for _, row in candidates.head(MAX_CANDIDATES).iterrows():
         code = str(row["code"]).strip()
         name = row.get("name", "")
 
@@ -257,28 +241,20 @@ def screen_with_cache(inst_df, vol_df, price_cache: dict,
             "passed": passed,
             "note": note,
         })
-
     return results
 
-
-# ══════════════════════════════════════════════
-# 主程式
-# ══════════════════════════════════════════════
 
 def run_screener(date_str: str | None = None) -> dict:
     if date_str is None:
         date_str = get_prev_trading_day()
 
-    # 20交易日前（週末跳過）
-    raw_hist_date = get_prev_trading_day(
+    raw_hist = get_prev_trading_day(
         base_date=datetime.strptime(date_str, "%Y%m%d"), offset=20
     )
 
     print(f"\n=== 今日：{date_str} ===")
-    print(f"=== 歷史基準（原始）：{raw_hist_date} ===")
-
-    # 歷史日期若為假日，自動往後找
-    hist_date_str = find_valid_trading_day(raw_hist_date)
+    print(f"=== 歷史基準（原始）：{raw_hist} ===")
+    hist_date_str = find_valid_trading_day(raw_hist)
     print(f"=== 歷史基準（確認）：{hist_date_str} ===\n")
 
     all_stocks = []
@@ -287,24 +263,29 @@ def run_screener(date_str: str | None = None) -> dict:
     print(f"【今日訊號篩選 {date_str}】")
     inst_today = twse_institutional(date_str)
     vol_today = twse_volume(date_str)
-    cache_today = build_price_cache(date_str)
-    today_results = screen_with_cache(inst_today, vol_today, cache_today, {}, hist_mode=False)
+    cands_today = get_candidates(inst_today, vol_today)
+    print(f"  法人買超>10% 候選：{len(cands_today)} 檔，抓取歷史價格中...")
+    codes_today = cands_today["code"].str.strip().tolist()
+    cache_today = build_price_cache(date_str, codes_today)
+    today_results = screen_with_cache(cands_today, cache_today, {}, hist_mode=False)
     print(f"今日符合條件：{len(today_results)} 檔\n")
 
     # ── 歷史回測 ──
     print(f"【歷史回測 {hist_date_str}】")
     inst_hist = twse_institutional(hist_date_str)
     vol_hist = twse_volume(hist_date_str)
-    cache_hist = build_price_cache(hist_date_str)
+    cands_hist = get_candidates(inst_hist, vol_hist)
+    print(f"  法人買超>10% 候選：{len(cands_hist)} 檔，抓取歷史價格中...")
+    codes_hist = cands_hist["code"].str.strip().tolist()
+    cache_hist = build_price_cache(hist_date_str, codes_hist)
     current_cache = build_current_price_cache(date_str)
-    hist_results = screen_with_cache(inst_hist, vol_hist, cache_hist, current_cache, hist_mode=True)
+    hist_results = screen_with_cache(cands_hist, cache_hist, current_cache, hist_mode=True)
     print(f"歷史符合條件：{len(hist_results)} 檔\n")
 
-    # ── 整合結果 ──
+    # ── 整合 ──
     for s in today_results:
         all_stocks.append({
-            "code": s["code"], "name": s["name"],
-            "market": "上市",
+            "code": s["code"], "name": s["name"], "market": "上市",
             "signal_date": date_str,
             "close": s["buy_price"],
             "gain_20d": s["gain_20d"],
@@ -323,8 +304,7 @@ def run_screener(date_str: str | None = None) -> dict:
 
     for s in hist_results:
         all_stocks.append({
-            "code": s["code"], "name": s["name"],
-            "market": "上市",
+            "code": s["code"], "name": s["name"], "market": "上市",
             "signal_date": hist_date_str,
             "close": s["price_now"] or s["buy_price"],
             "gain_20d": s["gain_20d"],
@@ -343,10 +323,8 @@ def run_screener(date_str: str | None = None) -> dict:
 
     def sort_key(x):
         p = x["backtest"]["passed_15pct"]
-        if p is True:
-            return (0, -x["gain_20d"])
-        if p is None:
-            return (1, -x["gain_20d"])
+        if p is True:   return (0, -x["gain_20d"])
+        if p is None:   return (1, -x["gain_20d"])
         return (2, -x["gain_20d"])
 
     all_stocks.sort(key=sort_key)
@@ -355,7 +333,7 @@ def run_screener(date_str: str | None = None) -> dict:
     output = {
         "date": date_str,
         "hist_date": hist_date_str,
-        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "status": "ok",
         "stocks": all_stocks,
     }
