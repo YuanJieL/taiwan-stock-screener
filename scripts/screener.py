@@ -1,8 +1,9 @@
 """
-台股三大法人選股篩選器（上市版 v3）
+台股三大法人選股篩選器（上市版 v4）
 篩選條件：
   1. 法人淨買量 / 當日總成交量 > 10%
   2. 近20個交易日漲幅 > 30%
+  3. 排除 ETF（含槓桿/反向）
 回測：20交易日前訊號，遇假日自動往後找最近交易日
 資料來源：TWSE 公開資料 API
 """
@@ -24,6 +25,17 @@ HEADERS = {
 
 MAX_CANDIDATES = 50
 
+ETF_NAME_KEYWORDS = ["ETF","正二","反一","反向","槓桿","基金",
+                     "高股息","ESG","永續","債券","期貨","商品"]
+
+
+def is_etf(code: str, name: str) -> bool:
+    code = str(code).strip()
+    name = str(name).strip()
+    if len(code) > 4:
+        return True
+    return any(kw in name for kw in ETF_NAME_KEYWORDS)
+
 
 def get_prev_trading_day(base_date=None, offset=1) -> str:
     dt = base_date or datetime.today()
@@ -37,7 +49,6 @@ def get_prev_trading_day(base_date=None, offset=1) -> str:
 
 
 def find_valid_trading_day(date_str: str, max_forward_days: int = 7) -> str:
-    """從 date_str 往後找，直到 TWSE 有資料的交易日"""
     dt = datetime.strptime(date_str, "%Y%m%d")
     for i in range(max_forward_days + 1):
         candidate = dt + timedelta(days=i)
@@ -149,7 +160,6 @@ def twse_price_history(stock_code: str, date_str: str) -> list:
 
 
 def build_price_cache(date_str: str, codes: list) -> dict:
-    """對候選股逐一抓近兩個月收盤價 → {code: [close, ...]}"""
     cache = {}
     total = len(codes)
     for i, code in enumerate(codes, 1):
@@ -185,7 +195,15 @@ def get_candidates(inst_df: pd.DataFrame, vol_df: pd.DataFrame) -> pd.DataFrame:
         lambda r: (r["inst_net"] / r["volume"] * 100) if r.get("volume", 0) > 0 else 0,
         axis=1
     )
-    return merged[merged["inst_ratio"] > 10].copy()
+    candidates = merged[merged["inst_ratio"] > 10].copy()
+    before = len(candidates)
+    candidates = candidates[
+        ~candidates.apply(lambda r: is_etf(r["code"], r.get("name", "")), axis=1)
+    ].copy()
+    etf_removed = before - len(candidates)
+    if etf_removed > 0:
+        print(f"  已過濾 ETF/槓桿商品：{etf_removed} 檔")
+    return candidates
 
 
 def screen_with_cache(candidates: pd.DataFrame, price_cache: dict,
@@ -264,8 +282,8 @@ def run_screener(date_str: str | None = None) -> dict:
     inst_today = twse_institutional(date_str)
     vol_today = twse_volume(date_str)
     cands_today = get_candidates(inst_today, vol_today)
-    print(f"  法人買超>10% 候選：{len(cands_today)} 檔，抓取歷史價格中...")
-    codes_today = cands_today["code"].str.strip().tolist()
+    print(f"  法人買超>10%（排除ETF後）候選：{len(cands_today)} 檔，抓取歷史價格中...")
+    codes_today = cands_today["code"].str.strip().tolist() if not cands_today.empty else []
     cache_today = build_price_cache(date_str, codes_today)
     today_results = screen_with_cache(cands_today, cache_today, {}, hist_mode=False)
     print(f"今日符合條件：{len(today_results)} 檔\n")
@@ -273,13 +291,21 @@ def run_screener(date_str: str | None = None) -> dict:
     # ── 歷史回測 ──
     print(f"【歷史回測 {hist_date_str}】")
     inst_hist = twse_institutional(hist_date_str)
+    if inst_hist.empty:
+        hist_date_str = find_valid_trading_day(hist_date_str)
+        inst_hist = twse_institutional(hist_date_str)
     vol_hist = twse_volume(hist_date_str)
     cands_hist = get_candidates(inst_hist, vol_hist)
-    print(f"  法人買超>10% 候選：{len(cands_hist)} 檔，抓取歷史價格中...")
-    codes_hist = cands_hist["code"].str.strip().tolist()
-    cache_hist = build_price_cache(hist_date_str, codes_hist)
-    current_cache = build_current_price_cache(date_str)
-    hist_results = screen_with_cache(cands_hist, cache_hist, current_cache, hist_mode=True)
+    print(f"  法人買超>10%（排除ETF後）候選：{len(cands_hist)} 檔，抓取歷史價格中...")
+
+    if cands_hist.empty:
+        hist_results = []
+    else:
+        codes_hist = cands_hist["code"].str.strip().tolist()
+        cache_hist = build_price_cache(hist_date_str, codes_hist)
+        current_cache = build_current_price_cache(date_str)
+        hist_results = screen_with_cache(cands_hist, cache_hist, current_cache, hist_mode=True)
+
     print(f"歷史符合條件：{len(hist_results)} 檔\n")
 
     # ── 整合 ──
@@ -323,8 +349,8 @@ def run_screener(date_str: str | None = None) -> dict:
 
     def sort_key(x):
         p = x["backtest"]["passed_15pct"]
-        if p is True:   return (0, -x["gain_20d"])
-        if p is None:   return (1, -x["gain_20d"])
+        if p is True:  return (0, -x["gain_20d"])
+        if p is None:  return (1, -x["gain_20d"])
         return (2, -x["gain_20d"])
 
     all_stocks.sort(key=sort_key)
