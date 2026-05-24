@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>台股三大法人選股 | 2026/05/20</title>
+  <title>台股三大法人選股（上市+上櫃）| 2026/05/22</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f7f7f5;color:#1a1a18;line-height:1.6}
     a{color:#185FA5;text-decoration:none}
-    a:hover{text-decoration:underline}
-    .wrap{max-width:1100px;margin:0 auto;padding:2rem 1rem}
+    .wrap{max-width:1200px;margin:0 auto;padding:2rem 1rem}
     .header h1{font-size:1.5rem;font-weight:500;margin-bottom:.3rem}
     .header p{font-size:.85rem;color:#666;margin-bottom:1.2rem}
     .condition{background:#fff;border:0.5px solid #e0e0de;border-radius:8px;padding:.8rem 1rem;font-size:.8rem;color:#666;margin-bottom:1rem}
@@ -17,20 +16,21 @@
     .meta{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem}
     .chip{background:#fff;border:0.5px solid #ddd;border-radius:6px;padding:.35rem .8rem;font-size:.8rem;color:#555}
     .chip strong{color:#1a1a18}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
-    .stat{background:#fff;border:0.5px solid #e0e0de;border-radius:8px;padding:.8rem 1rem;text-align:center}
-    .stat .num{font-size:1.6rem;font-weight:500}
-    .stat .label{font-size:.75rem;color:#888;margin-top:2px}
+    .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:1.5rem}
+    .stat{background:#fff;border:0.5px solid #e0e0de;border-radius:8px;padding:.8rem;text-align:center}
+    .stat .num{font-size:1.5rem;font-weight:500}
+    .stat .label{font-size:.7rem;color:#888;margin-top:2px}
     .card{background:#fff;border:0.5px solid #e0e0de;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
     tr:hover{background:#fafaf8}
     .footer{font-size:.75rem;color:#999;margin-top:1.5rem;line-height:1.8}
+    @media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="header">
-    <h1>🔍 台股三大法人選股 + 回測篩選器</h1>
-    <p>每個交易日自動執行 — 篩選條件符合後，回測買入20交易日是否再漲15%</p>
+    <h1>🔍 台股三大法人選股篩選器（上市 + 上櫃）</h1>
+    <p>每個交易日自動執行，同時涵蓋 TWSE 上市與 TPEx 上櫃股票</p>
   </div>
 
   <div class="condition">
@@ -40,197 +40,570 @@
   </div>
 
   <div class="meta">
-    <span class="chip">📅 資料日期：<strong>2026/05/20</strong></span>
-    <span class="chip">🕐 更新時間：<strong>2026/05/21 14:56（台北時間）</strong></span>
+    <span class="chip">📅 今日資料：<strong>2026/05/22</strong></span>
+    <span class="chip">📅 回測基準日：<strong>2026/04/24</strong></span>
+    <span class="chip">🕐 更新時間：<strong>2026/05/24 10:02（台北時間）</strong></span>
   </div>
 
   <div class="stats">
     <div class="stat">
       <div class="num" style="color:#27500A;">0</div>
-      <div class="label">✅ 回測通過（+15%以上）</div>
+      <div class="label">✅ 回測通過</div>
     </div>
     <div class="stat">
-      <div class="num" style="color:#BA7517;">13</div>
-      <div class="label">⏳ 觀察中（未滿20交易日）</div>
+      <div class="num" style="color:#BA7517;">37</div>
+      <div class="label">⏳ 觀察中</div>
     </div>
     <div class="stat">
       <div class="num" style="color:#A32D2D;">0</div>
-      <div class="label">❌ 回測未達標</div>
+      <div class="label">❌ 未達標</div>
+    </div>
+    <div class="stat">
+      <div class="num" style="color:#0C447C;">37</div>
+      <div class="label">📈 上市個股</div>
+    </div>
+    <div class="stat">
+      <div class="num" style="color:#4A2580;">0</div>
+      <div class="label">📊 上櫃個股</div>
     </div>
   </div>
 
   <div class="card">
     
         <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <table style="width:100%;border-collapse:collapse;font-size:14px;min-width:900px;">
           <thead>
             <tr style="background:#f5f5f3;border-bottom:1px solid #ddd;">
               <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">代號</th>
               <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">名稱</th>
-              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">收盤價</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">市場</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">訊號日期</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">買入價</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">現價</th>
               <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">近20日漲幅</th>
               <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">法人買超占比</th>
               <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">回測20日漲幅</th>
-              <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">回測日期</th>
               <th style="padding:10px 12px;text-align:left;font-weight:500;color:#555;white-space:nowrap;">回測結果</th>
             </tr>
           </thead>
           <tbody>
             
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">6658</td>
-      <td style="padding:10px 12px;">聯策            </td>
-      <td style="padding:10px 12px;font-weight:500;">175.5 元</td>
-      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+92.0%</td>
-      <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">19.4%</span>
-      </td>
-      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
-      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
-    </tr>
-    <tr>
       <td style="padding:10px 12px;font-weight:500;">2492</td>
       <td style="padding:10px 12px;">華新科          </td>
-      <td style="padding:10px 12px;font-weight:500;">266.0 元</td>
-      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+86.7%</td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">292.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">292.5 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+125.0%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">41.8%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">36.1%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">6834</td>
-      <td style="padding:10px 12px;">天二科技        </td>
-      <td style="padding:10px 12px;font-weight:500;">66.6 元</td>
-      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+76.9%</td>
+      <td style="padding:10px 12px;font-weight:500;">3090</td>
+      <td style="padding:10px 12px;">日電貿          </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">215.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">215.0 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+118.3%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">71.2%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">10.1%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
       <td style="padding:10px 12px;font-weight:500;">3026</td>
       <td style="padding:10px 12px;">禾伸堂          </td>
-      <td style="padding:10px 12px;font-weight:500;">433.5 元</td>
-      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+74.8%</td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">476.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">476.5 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+113.2%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">29.7%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">22.8%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
       <td style="padding:10px 12px;font-weight:500;">3048</td>
       <td style="padding:10px 12px;">益登            </td>
-      <td style="padding:10px 12px;font-weight:500;">67.8 元</td>
-      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+67.2%</td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">74.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">74.5 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+94.5%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">12.1%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">17.4%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">7769</td>
-      <td style="padding:10px 12px;">鴻勁            </td>
-      <td style="padding:10px 12px;font-weight:500;">7,675.0 元</td>
-      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+61.8%</td>
+      <td style="padding:10px 12px;font-weight:500;">6658</td>
+      <td style="padding:10px 12px;">聯策            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">193.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">193.0 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+92.0%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">17.5%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">14.1%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">2911</td>
-      <td style="padding:10px 12px;">麗嬰房          </td>
-      <td style="padding:10px 12px;font-weight:500;">7.9 元</td>
-      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+55.5%</td>
+      <td style="padding:10px 12px;font-weight:500;">1727</td>
+      <td style="padding:10px 12px;">中華化          </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">102.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">102.0 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+58.6%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">33.5%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">20.0%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">4958</td>
-      <td style="padding:10px 12px;">臻鼎-KY         </td>
-      <td style="padding:10px 12px;font-weight:500;">469.5 元</td>
-      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+49.0%</td>
+      <td style="padding:10px 12px;font-weight:500;">3209</td>
+      <td style="padding:10px 12px;">全科            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">78.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">78.0 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+57.4%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">20.2%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">12.5%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">3135</td>
-      <td style="padding:10px 12px;">凌航            </td>
-      <td style="padding:10px 12px;font-weight:500;">195.5 元</td>
-      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+47.0%</td>
+      <td style="padding:10px 12px;font-weight:500;">3006</td>
+      <td style="padding:10px 12px;">晶豪科          </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">237.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">237.5 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+52.7%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">33.3%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">4722</td>
+      <td style="padding:10px 12px;">國精化          </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">286.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">286.5 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+52.4%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">15.7%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">02001L</td>
+      <td style="padding:10px 12px;">富邦蘋果正二N   </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">139.9 元</td>
+      <td style="padding:10px 12px;font-weight:500;">139.9 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+52.2%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">36.2%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6831</td>
+      <td style="padding:10px 12px;">邁科            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">786.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">786.0 元</td>
+      <td style="padding:10px 12px;color:#27500A;font-weight:500;">+51.1%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">14.0%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">2344</td>
+      <td style="padding:10px 12px;">華邦電          </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">125.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">125.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+42.4%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">27.0%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">8374</td>
+      <td style="padding:10px 12px;">羅昇            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">109.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">109.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+41.9%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">20.8%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">3149</td>
+      <td style="padding:10px 12px;">正達            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">59.1 元</td>
+      <td style="padding:10px 12px;font-weight:500;">59.1 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+40.5%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">21.7%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6116</td>
+      <td style="padding:10px 12px;">彩晶            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">11.85 元</td>
+      <td style="padding:10px 12px;font-weight:500;">11.8 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+40.4%</td>
       <td style="padding:10px 12px;">
         <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">25.0%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">2375</td>
-      <td style="padding:10px 12px;">凱美            </td>
-      <td style="padding:10px 12px;font-weight:500;">122.5 元</td>
-      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+42.8%</td>
+      <td style="padding:10px 12px;font-weight:500;">2428</td>
+      <td style="padding:10px 12px;">興勤            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">242.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">242.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+39.4%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">14.8%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">18.9%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">4916</td>
-      <td style="padding:10px 12px;">事欣科          </td>
-      <td style="padding:10px 12px;font-weight:500;">98.8 元</td>
-      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+42.2%</td>
+      <td style="padding:10px 12px;font-weight:500;">4576</td>
+      <td style="padding:10px 12px;">大銀微系統      </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">261.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">261.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+37.6%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">10.8%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">12.5%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
-      <td style="padding:10px 12px;font-weight:500;">7823</td>
-      <td style="padding:10px 12px;">奧義賽博-KY創   </td>
-      <td style="padding:10px 12px;font-weight:500;">109.0 元</td>
-      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+38.3%</td>
+      <td style="padding:10px 12px;font-weight:500;">020029</td>
+      <td style="padding:10px 12px;">元大ESG高股息N  </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">15.71 元</td>
+      <td style="padding:10px 12px;font-weight:500;">15.7 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+36.4%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">68.2%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">79.0%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6285</td>
+      <td style="padding:10px 12px;">啟碁            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">296.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">296.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+36.1%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">16.5%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
     <tr>
       <td style="padding:10px 12px;font-weight:500;">1762</td>
       <td style="padding:10px 12px;">中化生          </td>
-      <td style="padding:10px 12px;font-weight:500;">37.8 元</td>
-      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+34.1%</td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">37.95 元</td>
+      <td style="padding:10px 12px;font-weight:500;">38.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+36.0%</td>
       <td style="padding:10px 12px;">
-        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">27.3%</span>
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">16.3%</span>
       </td>
       <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
-      <td style="padding:10px 12px;font-size:12px;color:#666;">None</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">4919</td>
+      <td style="padding:10px 12px;">新唐            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">199.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">199.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+35.7%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">13.8%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6415</td>
+      <td style="padding:10px 12px;">矽力*-KY        </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">562.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">562.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+35.3%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">13.5%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">3305</td>
+      <td style="padding:10px 12px;">昇貿            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">146.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">146.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+34.6%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">20.0%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">8926</td>
+      <td style="padding:10px 12px;">台汽電          </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">60.9 元</td>
+      <td style="padding:10px 12px;font-weight:500;">60.9 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+34.1%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">16.5%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6695</td>
+      <td style="padding:10px 12px;">芯鼎            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">56.6 元</td>
+      <td style="padding:10px 12px;font-weight:500;">56.6 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+34.1%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">21.8%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">8028</td>
+      <td style="padding:10px 12px;">昇陽半導體      </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">294.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">294.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+33.6%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">14.9%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">3037</td>
+      <td style="padding:10px 12px;">欣興            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">970.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">970.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+33.2%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">12.4%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">7730</td>
+      <td style="padding:10px 12px;">暉盛-創         </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">230.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">230.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+32.6%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">13.9%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">4540</td>
+      <td style="padding:10px 12px;">全球傳動        </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">72.6 元</td>
+      <td style="padding:10px 12px;font-weight:500;">72.6 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+32.2%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">30.2%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">2441</td>
+      <td style="padding:10px 12px;">超豐            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">117.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">117.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+32.2%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">20.4%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">2395</td>
+      <td style="padding:10px 12px;">研華            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">469.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">469.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+31.6%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">17.0%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6579</td>
+      <td style="padding:10px 12px;">研揚            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">154.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">154.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+31.5%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">33.0%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">7749</td>
+      <td style="padding:10px 12px;">意騰-KY         </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">544.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">544.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+31.1%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">12.2%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6206</td>
+      <td style="padding:10px 12px;">飛捷            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">140.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">140.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+30.8%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">34.4%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6215</td>
+      <td style="padding:10px 12px;">和椿            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">134.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">134.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+30.6%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">11.8%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">6412</td>
+      <td style="padding:10px 12px;">群電            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">100.5 元</td>
+      <td style="padding:10px 12px;font-weight:500;">100.5 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+30.2%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">25.4%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
+      <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px;font-weight:500;">3167</td>
+      <td style="padding:10px 12px;">大量            </td>
+      <td style="padding:10px 12px;"><span style="background:#E6F1FB;color:#0C447C;padding:2px 6px;border-radius:4px;font-size:11px;">上市</span></td>
+      <td style="padding:10px 12px;font-size:12px;color:#666;">2026/05/22</td>
+      <td style="padding:10px 12px;font-weight:500;">831.0 元</td>
+      <td style="padding:10px 12px;font-weight:500;">831.0 元</td>
+      <td style="padding:10px 12px;color:#3B6D11;font-weight:500;">+30.1%</td>
+      <td style="padding:10px 12px;">
+        <span style="background:#E6F1FB;color:#185FA5;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">12.6%</span>
+      </td>
+      <td style="padding:10px 12px;color:#888780;font-weight:500;">—</td>
       <td style="padding:10px 12px;"><span style="background:#FAEEDA;color:#633806;padding:2px 8px;border-radius:4px;font-size:12px;font-weight:500;">⏳ 觀察中</span></td>
     </tr>
           </tbody>
@@ -240,10 +613,12 @@
 
   <div class="footer">
     ⚠ 本頁面資訊僅供參考，不構成任何投資建議。股市投資有風險，請自行評估。<br/>
-    資料來源：臺灣證券交易所（TWSE）公開資訊。<br/>
+    資料來源：臺灣證券交易所（TWSE）、櫃買中心（TPEx）公開資訊。<br/>
     <a href="data/latest.json" target="_blank">📄 下載原始 JSON</a>
     &nbsp;|&nbsp;
-    <a href="https://www.twse.com.tw" target="_blank">TWSE 官網</a>
+    <a href="https://www.twse.com.tw" target="_blank">TWSE</a>
+    &nbsp;|&nbsp;
+    <a href="https://www.tpex.org.tw" target="_blank">TPEx</a>
   </div>
 </div>
 </body>
