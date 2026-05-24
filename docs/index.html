@@ -2,84 +2,390 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>台股三大法人選股（上市+上櫃）| 2026/05/22</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>台股法人選股 | 2026/05/22</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f7f7f5;color:#1a1a18;line-height:1.6}
-    a{color:#185FA5;text-decoration:none}
-    .wrap{max-width:1200px;margin:0 auto;padding:2rem 1rem}
-    .header h1{font-size:1.5rem;font-weight:500;margin-bottom:.3rem}
-    .header p{font-size:.85rem;color:#666;margin-bottom:1.2rem}
-    .condition{background:#fff;border:0.5px solid #e0e0de;border-radius:8px;padding:.8rem 1rem;font-size:.8rem;color:#666;margin-bottom:1rem}
-    .condition strong{color:#1a1a18}
-    .meta{display:flex;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem}
-    .chip{background:#fff;border:0.5px solid #ddd;border-radius:6px;padding:.35rem .8rem;font-size:.8rem;color:#555}
-    .chip strong{color:#1a1a18}
-    .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:1.5rem}
-    .stat{background:#fff;border:0.5px solid #e0e0de;border-radius:8px;padding:.8rem;text-align:center}
-    .stat .num{font-size:1.5rem;font-weight:500}
-    .stat .label{font-size:.7rem;color:#888;margin-top:2px}
-    .card{background:#fff;border:0.5px solid #e0e0de;border-radius:12px;overflow:hidden;margin-bottom:1.5rem}
-    tr:hover{background:#fafaf8}
-    .footer{font-size:.75rem;color:#999;margin-top:1.5rem;line-height:1.8}
-    @media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', sans-serif;
+      background: #f4f4f2; color: #1a1a18; line-height: 1.6; font-size: 14px;
+    }
+    a { color: #185FA5; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1300px; margin: 0 auto; padding: 1.5rem 1rem; }
+    .header { margin-bottom: 1.2rem; }
+    .header h1 { font-size: 1.4rem; font-weight: 600; margin-bottom: .2rem; }
+    .header p  { font-size: .82rem; color: #666; }
+    .condition {
+      background: #fff; border: 0.5px solid #e0e0de; border-radius: 8px;
+      padding: .65rem 1rem; font-size: .8rem; color: #555; margin-bottom: 1rem;
+    }
+    .condition strong { color: #1a1a18; }
+    .meta { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .chip {
+      background: #fff; border: 0.5px solid #ddd; border-radius: 6px;
+      padding: .3rem .75rem; font-size: .78rem; color: #555;
+    }
+    .chip strong { color: #1a1a18; }
+    .stats {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 10px; margin-bottom: 1.4rem;
+    }
+    .stat {
+      background: #fff; border: 0.5px solid #e0e0de; border-radius: 10px;
+      padding: .75rem .5rem; text-align: center;
+    }
+    .stat .num { font-size: 1.5rem; font-weight: 600; }
+    .stat .lbl { font-size: .7rem; color: #888; margin-top: 2px; }
+    .card {
+      background: #fff; border: 0.5px solid #e0e0de;
+      border-radius: 12px; overflow: hidden; margin-bottom: 1.4rem;
+    }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 960px; }
+    thead tr { background: #f5f5f3; border-bottom: 1px solid #e0e0de; }
+    th {
+      padding: 10px 12px; text-align: left;
+      font-weight: 500; color: #555; white-space: nowrap; font-size: 13px;
+    }
+    td { padding: 9px 12px; border-bottom: .5px solid #f0f0ee; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fafaf8; }
+    .dim { color: #888; font-size: 12px; }
+    .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 500; white-space: nowrap;
+    }
+    .badge-pass  { background: #EAF3DE; color: #27500A; }
+    .badge-fail  { background: #FCEBEB; color: #791F1F; }
+    .badge-watch { background: #FAEEDA; color: #633806; }
+    .badge-stock { background: #E6F1FB; color: #0C447C; }
+    .badge-etf   { background: #F0EBF8; color: #4A2580; }
+    .ratio-chip {
+      background: #E6F1FB; color: #185FA5;
+      padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;
+    }
+    .empty { text-align: center; padding: 3rem; color: #888; font-size: 1rem; }
+    .footer { font-size: .73rem; color: #aaa; line-height: 1.9; margin-top: 1rem; }
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(3, 1fr); }
+    }
   </style>
 </head>
 <body>
 <div class="wrap">
   <div class="header">
-    <h1>🔍 台股三大法人選股篩選器（上市 + 上櫃）</h1>
-    <p>每個交易日自動執行，同時涵蓋 TWSE 上市與 TPEx 上櫃股票</p>
+    <h1>🔍 台股三大法人選股篩選器</h1>
+    <p>每個交易日自動執行 — TWSE 上市股票（含 ETF）</p>
   </div>
-
   <div class="condition">
-    <strong>篩選條件：</strong>三大法人淨買超占比 &gt; 10%　且　近20交易日漲幅 &gt; 30%
-    　｜　
-    <strong>回測：</strong>當天收盤買入，20個交易日後漲幅是否 ≥ 15%
+    <strong>篩選：</strong>三大法人淨買超 / 總成交量 &gt; 10%　且　近20交易日漲幅 &gt; 30%
+    　｜　<strong>回測：</strong>當天收盤買入，20交易日後漲幅是否 ≥ 15%
   </div>
-
   <div class="meta">
     <span class="chip">📅 今日資料：<strong>2026/05/22</strong></span>
-    <span class="chip">📅 回測基準日：<strong>2026/04/24</strong></span>
-    <span class="chip">🕐 更新時間：<strong>2026/05/24 10:15（台北時間）</strong></span>
+    <span class="chip">📅 回測基準：<strong>2026/04/24（20交易日前）</strong></span>
+    <span class="chip">🕐 更新：<strong>2026/05/24 11:35（台北時間）</strong></span>
   </div>
-
   <div class="stats">
-    <div class="stat">
-      <div class="num" style="color:#27500A;">0</div>
-      <div class="label">✅ 回測通過</div>
-    </div>
-    <div class="stat">
-      <div class="num" style="color:#BA7517;">0</div>
-      <div class="label">⏳ 觀察中</div>
-    </div>
-    <div class="stat">
-      <div class="num" style="color:#A32D2D;">0</div>
-      <div class="label">❌ 未達標</div>
-    </div>
-    <div class="stat">
-      <div class="num" style="color:#0C447C;">0</div>
-      <div class="label">📈 上市個股</div>
-    </div>
-    <div class="stat">
-      <div class="num" style="color:#4A2580;">0</div>
-      <div class="label">📊 上櫃個股</div>
-    </div>
+    <div class="stat"><div class="num" style="color:#27500A;">6</div><div class="lbl">✅ 回測通過</div></div>
+    <div class="stat"><div class="num" style="color:#BA7517;">8</div><div class="lbl">⏳ 觀察中</div></div>
+    <div class="stat"><div class="num" style="color:#A32D2D;">9</div><div class="lbl">❌ 未達標</div></div>
+    <div class="stat"><div class="num" style="color:#185FA5;">23</div><div class="lbl">📈 個股</div></div>
+    <div class="stat"><div class="num" style="color:#4A2580;">0</div><div class="lbl">📦 ETF</div></div>
+    <div class="stat"><div class="num" style="color:#185FA5;">40%</div><div class="lbl">🎯 回測勝率</div></div>
   </div>
-
-  <div class="card">
-    <div style="text-align:center;padding:3rem;color:#888;"><p>今日無符合條件個股</p></div>
-  </div>
-
+  <div class="card"><div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>代號</th><th>名稱</th><th>類型</th><th>訊號日</th>
+            <th>買入價</th><th>現價</th><th>近20日漲幅</th>
+            <th>法人占比</th><th>回測漲幅</th><th>回測日</th><th>結果</th>
+          </tr></thead>
+          <tbody><tr>
+      <td><strong>2454</strong></td>
+      <td>聯發科          </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>2,610.0</strong></td>
+      <td><strong>3,860.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+75.2%</td>
+      <td><span class="ratio-chip">13.0%</span></td>
+      <td style="color:#3B6D11;font-weight:600;">+47.9%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-pass">✅ 回測通過</span></td>
+    </tr><tr>
+      <td><strong>3189</strong></td>
+      <td>景碩            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>528.0</strong></td>
+      <td><strong>609.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+68.7%</td>
+      <td><span class="ratio-chip">80.1%</span></td>
+      <td style="color:#639922;font-weight:600;">+15.3%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-pass">✅ 回測通過</span></td>
+    </tr><tr>
+      <td><strong>2464</strong></td>
+      <td>盟立            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>113.5</strong></td>
+      <td><strong>144.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+68.4%</td>
+      <td><span class="ratio-chip">10.7%</span></td>
+      <td style="color:#639922;font-weight:600;">+26.9%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-pass">✅ 回測通過</span></td>
+    </tr><tr>
+      <td><strong>1727</strong></td>
+      <td>中華化          </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>81.5</strong></td>
+      <td><strong>102.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+68.0%</td>
+      <td><span class="ratio-chip">16.5%</span></td>
+      <td style="color:#639922;font-weight:600;">+25.1%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-pass">✅ 回測通過</span></td>
+    </tr><tr>
+      <td><strong>8028</strong></td>
+      <td>昇陽半導體      </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>245.0</strong></td>
+      <td><strong>294.0</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+35.4%</td>
+      <td><span class="ratio-chip">23.3%</span></td>
+      <td style="color:#639922;font-weight:600;">+20.0%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-pass">✅ 回測通過</span></td>
+    </tr><tr>
+      <td><strong>3030</strong></td>
+      <td>德律            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>342.5</strong></td>
+      <td><strong>419.5</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+34.0%</td>
+      <td><span class="ratio-chip">17.2%</span></td>
+      <td style="color:#639922;font-weight:600;">+22.5%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-pass">✅ 回測通過</span></td>
+    </tr><tr>
+      <td><strong>2492</strong></td>
+      <td>華新科          </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/05/22</td>
+      <td><strong>292.5</strong></td>
+      <td><strong>—</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+125.0%</td>
+      <td><span class="ratio-chip">36.1%</span></td>
+      <td style="color:#888;font-weight:600;">—</td>
+      <td class="dim">—</td>
+      <td><span class="badge badge-watch">⏳ 觀察中</span></td>
+    </tr><tr>
+      <td><strong>3006</strong></td>
+      <td>晶豪科          </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/05/22</td>
+      <td><strong>237.5</strong></td>
+      <td><strong>—</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+52.7%</td>
+      <td><span class="ratio-chip">33.3%</span></td>
+      <td style="color:#888;font-weight:600;">—</td>
+      <td class="dim">—</td>
+      <td><span class="badge badge-watch">⏳ 觀察中</span></td>
+    </tr><tr>
+      <td><strong>2344</strong></td>
+      <td>華邦電          </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/05/22</td>
+      <td><strong>125.0</strong></td>
+      <td><strong>—</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+42.4%</td>
+      <td><span class="ratio-chip">27.0%</span></td>
+      <td style="color:#888;font-weight:600;">—</td>
+      <td class="dim">—</td>
+      <td><span class="badge badge-watch">⏳ 觀察中</span></td>
+    </tr><tr>
+      <td><strong>3149</strong></td>
+      <td>正達            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/05/22</td>
+      <td><strong>59.1</strong></td>
+      <td><strong>—</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+40.5%</td>
+      <td><span class="ratio-chip">21.7%</span></td>
+      <td style="color:#888;font-weight:600;">—</td>
+      <td class="dim">—</td>
+      <td><span class="badge badge-watch">⏳ 觀察中</span></td>
+    </tr><tr>
+      <td><strong>6116</strong></td>
+      <td>彩晶            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/05/22</td>
+      <td><strong>11.8</strong></td>
+      <td><strong>—</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+40.4%</td>
+      <td><span class="ratio-chip">25.0%</span></td>
+      <td style="color:#888;font-weight:600;">—</td>
+      <td class="dim">—</td>
+      <td><span class="badge badge-watch">⏳ 觀察中</span></td>
+    </tr><tr>
+      <td><strong>6285</strong></td>
+      <td>啟碁            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/05/22</td>
+      <td><strong>296.0</strong></td>
+      <td><strong>—</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+36.1%</td>
+      <td><span class="ratio-chip">16.5%</span></td>
+      <td style="color:#888;font-weight:600;">—</td>
+      <td class="dim">—</td>
+      <td><span class="badge badge-watch">⏳ 觀察中</span></td>
+    </tr><tr>
+      <td><strong>4919</strong></td>
+      <td>新唐            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/05/22</td>
+      <td><strong>199.5</strong></td>
+      <td><strong>—</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+35.7%</td>
+      <td><span class="ratio-chip">13.8%</span></td>
+      <td style="color:#888;font-weight:600;">—</td>
+      <td class="dim">—</td>
+      <td><span class="badge badge-watch">⏳ 觀察中</span></td>
+    </tr><tr>
+      <td><strong>3037</strong></td>
+      <td>欣興            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/05/22</td>
+      <td><strong>970.0</strong></td>
+      <td><strong>—</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+33.2%</td>
+      <td><span class="ratio-chip">12.4%</span></td>
+      <td style="color:#888;font-weight:600;">—</td>
+      <td class="dim">—</td>
+      <td><span class="badge badge-watch">⏳ 觀察中</span></td>
+    </tr><tr>
+      <td><strong>8046</strong></td>
+      <td>南電            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>1,005.0</strong></td>
+      <td><strong>934.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+92.5%</td>
+      <td><span class="ratio-chip">45.2%</span></td>
+      <td style="color:#A32D2D;font-weight:600;">-7.1%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr><tr>
+      <td><strong>6531</strong></td>
+      <td>愛普*           </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>840.0</strong></td>
+      <td><strong>963.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+90.0%</td>
+      <td><span class="ratio-chip">14.0%</span></td>
+      <td style="color:#888;font-weight:600;">+14.6%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr><tr>
+      <td><strong>6213</strong></td>
+      <td>聯茂            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>270.0</strong></td>
+      <td><strong>262.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+81.8%</td>
+      <td><span class="ratio-chip">19.2%</span></td>
+      <td style="color:#A32D2D;font-weight:600;">-3.0%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr><tr>
+      <td><strong>6672</strong></td>
+      <td>騰輝電子-KY     </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>219.0</strong></td>
+      <td><strong>193.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+74.5%</td>
+      <td><span class="ratio-chip">41.6%</span></td>
+      <td style="color:#A32D2D;font-weight:600;">-11.9%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr><tr>
+      <td><strong>2368</strong></td>
+      <td>金像電          </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>1,390.0</strong></td>
+      <td><strong>1,330.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+61.6%</td>
+      <td><span class="ratio-chip">20.8%</span></td>
+      <td style="color:#A32D2D;font-weight:600;">-4.3%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr><tr>
+      <td><strong>2340</strong></td>
+      <td>台亞            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>38.0</strong></td>
+      <td><strong>38.6</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+57.2%</td>
+      <td><span class="ratio-chip">20.5%</span></td>
+      <td style="color:#888;font-weight:600;">+1.6%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr><tr>
+      <td><strong>2345</strong></td>
+      <td>智邦            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>2,280.0</strong></td>
+      <td><strong>2,470.0</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+51.0%</td>
+      <td><span class="ratio-chip">29.6%</span></td>
+      <td style="color:#888;font-weight:600;">+8.3%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr><tr>
+      <td><strong>4720</strong></td>
+      <td>德淵            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>26.4</strong></td>
+      <td><strong>25.8</strong></td>
+      <td style="color:#1a5c06;font-weight:600;">+50.0%</td>
+      <td><span class="ratio-chip">78.0%</span></td>
+      <td style="color:#A32D2D;font-weight:600;">-2.3%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr><tr>
+      <td><strong>2399</strong></td>
+      <td>映泰            </td>
+      <td><span class="badge badge-stock">📈 個股</span></td>
+      <td class="dim">2026/04/24</td>
+      <td><strong>42.5</strong></td>
+      <td><strong>46.5</strong></td>
+      <td style="color:#3B6D11;font-weight:600;">+41.3%</td>
+      <td><span class="ratio-chip">15.6%</span></td>
+      <td style="color:#888;font-weight:600;">+9.7%</td>
+      <td class="dim">2026/05/22</td>
+      <td><span class="badge badge-fail">❌ 未達標</span></td>
+    </tr></tbody>
+        </table></div></div>
   <div class="footer">
     ⚠ 本頁面資訊僅供參考，不構成任何投資建議。股市投資有風險，請自行評估。<br/>
-    資料來源：臺灣證券交易所（TWSE）、櫃買中心（TPEx）公開資訊。<br/>
-    <a href="data/latest.json" target="_blank">📄 下載原始 JSON</a>
-    &nbsp;|&nbsp;
-    <a href="https://www.twse.com.tw" target="_blank">TWSE</a>
-    &nbsp;|&nbsp;
-    <a href="https://www.tpex.org.tw" target="_blank">TPEx</a>
+    資料來源：臺灣證券交易所（TWSE）公開資訊。<br/>
+    <a href="data/latest.json" target="_blank">📄 原始 JSON</a> &nbsp;|&nbsp;
+    <a href="https://www.twse.com.tw" target="_blank">TWSE 官網</a> &nbsp;|&nbsp;
+    <a href="https://github.com/YuanJieL/taiwan-stock-screener" target="_blank">GitHub</a>
   </div>
 </div>
 </body>
