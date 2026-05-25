@@ -1,7 +1,7 @@
 {
   "date": "20260522",
   "hist_date": "20260424",
-  "generated_at": "2026-05-24T03:35:32.127628+00:00",
+  "generated_at": "2026-05-25T03:32:00.348558+00:00",
   "status": "ok",
   "stocks": [
     {
@@ -81,25 +81,6 @@
       }
     },
     {
-      "code": "8028",
-      "name": "昇陽半導體      ",
-      "market": "上市",
-      "signal_date": "20260424",
-      "close": 294.0,
-      "gain_20d": 35.36,
-      "inst_net_shares": 1983096,
-      "inst_ratio": 23.28,
-      "volume_shares": 8520221,
-      "backtest": {
-        "buy_price": 245.0,
-        "price_after_20d": 294.0,
-        "date_after_20d": "20260522",
-        "gain_after_20d": 20.0,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 20.0%"
-      }
-    },
-    {
       "code": "3030",
       "name": "德律            ",
       "market": "上市",
@@ -116,6 +97,25 @@
         "gain_after_20d": 22.48,
         "passed_15pct": true,
         "note": "買入後20日 ✅ 上漲 22.5%"
+      }
+    },
+    {
+      "code": "2609",
+      "name": "陽明            ",
+      "market": "上市",
+      "signal_date": "20260522",
+      "close": 53.0,
+      "gain_20d": 369.03,
+      "inst_net_shares": 17687969,
+      "inst_ratio": 39.76,
+      "volume_shares": 44488347,
+      "backtest": {
+        "buy_price": 53.0,
+        "price_after_20d": null,
+        "date_after_20d": null,
+        "gain_after_20d": null,
+        "passed_15pct": null,
+        "note": "⏳ 觀察中（今日新訊號）"
       }
     },
     {
@@ -344,25 +344,6 @@
         "gain_after_20d": -11.87,
         "passed_15pct": false,
         "note": "買入後20日 ❌ 未達 -11.9%"
-      }
-    },
-    {
-      "code": "2368",
-      "name": "金像電          ",
-      "market": "上市",
-      "signal_date": "20260424",
-      "close": 1330.0,
-      "gain_20d": 61.63,
-      "inst_net_shares": 1176518,
-      "inst_ratio": 20.84,
-      "volume_shares": 5646399,
-      "backtest": {
-        "buy_price": 1390.0,
-        "price_after_20d": 1330.0,
-        "date_after_20d": "20260522",
-        "gain_after_20d": -4.32,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -4.3%"
       }
     },
     {
