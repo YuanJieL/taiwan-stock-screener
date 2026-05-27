@@ -1,7 +1,7 @@
 {
   "date": "20260526",
   "hist_date": "20260428",
-  "generated_at": "2026-05-27T08:28:33.531134+00:00",
+  "generated_at": "2026-05-27T08:52:30.493856+00:00",
   "status": "ok",
   "backtest_stats": {
     "win_rate": null,
@@ -68,27 +68,6 @@
       "signal": "🟡 強力觀察",
       "backtest": {
         "buy_price": 231.0,
-        "price_after_20d": null,
-        "date_after_20d": null,
-        "gain_after_20d": null,
-        "passed_15pct": null,
-        "note": "⏳ 觀察中（今日新訊號）"
-      }
-    },
-    {
-      "code": "1563",
-      "name": "巧新            ",
-      "market": "上市",
-      "signal_date": "20260526",
-      "close": 55.6,
-      "gain_20d": 36.78,
-      "inst_net_shares": 666365,
-      "inst_ratio": 47.96,
-      "volume_shares": 1389402,
-      "ai_score": 58.2,
-      "signal": "🟡 觀察",
-      "backtest": {
-        "buy_price": 55.6,
         "price_after_20d": null,
         "date_after_20d": null,
         "gain_after_20d": null,
@@ -236,6 +215,27 @@
       "signal": "🟡 觀察",
       "backtest": {
         "buy_price": 266.0,
+        "price_after_20d": null,
+        "date_after_20d": null,
+        "gain_after_20d": null,
+        "passed_15pct": null,
+        "note": "⏳ 觀察中（今日新訊號）"
+      }
+    },
+    {
+      "code": "6706",
+      "name": "惠特            ",
+      "market": "上市",
+      "signal_date": "20260526",
+      "close": 216.5,
+      "gain_20d": 61.57,
+      "inst_net_shares": 3033007,
+      "inst_ratio": 23.61,
+      "volume_shares": 12845565,
+      "ai_score": 45.3,
+      "signal": "🟡 觀察",
+      "backtest": {
+        "buy_price": 216.5,
         "price_after_20d": null,
         "date_after_20d": null,
         "gain_after_20d": null,
@@ -446,27 +446,6 @@
       "signal": "🟡 觀察",
       "backtest": {
         "buy_price": 155.0,
-        "price_after_20d": null,
-        "date_after_20d": null,
-        "gain_after_20d": null,
-        "passed_15pct": null,
-        "note": "⏳ 觀察中（今日新訊號）"
-      }
-    },
-    {
-      "code": "3055",
-      "name": "蔚華科          ",
-      "market": "上市",
-      "signal_date": "20260526",
-      "close": 112.5,
-      "gain_20d": 44.79,
-      "inst_net_shares": 752544,
-      "inst_ratio": 17.55,
-      "volume_shares": 4288094,
-      "ai_score": 36.0,
-      "signal": "🟡 觀察",
-      "backtest": {
-        "buy_price": 112.5,
         "price_after_20d": null,
         "date_after_20d": null,
         "gain_after_20d": null,
