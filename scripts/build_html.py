@@ -1,6 +1,7 @@
 """
 AI 法人戰情室 — build_html.py
 科技風 UI + AI 評分 + 多空燈號 + 回測統計 + 手機卡片版
++ 即時指數監控 + 手動更新按鈕
 """
 
 import json
@@ -158,6 +159,24 @@ body {
 }
 a { color: #00ccff; text-decoration: none; }
 a:hover { color: #00ffff; }
+
+/* ── 指數橫幅 ── */
+.index-bar {
+  background: #001520;
+  border-bottom: 1px solid #00ccff22;
+  padding: .4rem 1.5rem;
+  display: flex; gap: 1.5rem; flex-wrap: wrap;
+  overflow-x: auto;
+}
+.index-item {
+  display: flex; flex-direction: column; align-items: center;
+  min-width: 90px; white-space: nowrap;
+}
+.index-item .idx-name { font-size: 10px; color: #4a8fa8; letter-spacing: .5px; }
+.index-item .idx-val  { font-size: 13px; font-weight: 700; color: #e0f0ff; }
+.index-item .idx-chg  { font-size: 11px; font-weight: 600; }
+
+/* ── 頂部標題 ── */
 .topbar {
   background: linear-gradient(90deg, #001a22 0%, #002a3a 50%, #001a22 100%);
   border-bottom: 1px solid #00ccff33;
@@ -173,6 +192,21 @@ a:hover { color: #00ffff; }
 .topbar-left p { font-size: .75rem; color: #4a8fa8; margin-top: 2px; }
 .topbar-right { font-size: .75rem; color: #4a8fa8; text-align: right; }
 .topbar-right strong { color: #00ccff; }
+
+/* ── 手動更新按鈕 ── */
+.update-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, #003344, #005566);
+  border: 1px solid #00ccff66;
+  color: #00ffff; font-size: 13px; font-weight: 600;
+  padding: .45rem 1rem; border-radius: 6px;
+  cursor: pointer; transition: all .2s;
+  margin-top: 6px;
+}
+.update-btn:hover { background: linear-gradient(135deg, #005566, #007788); border-color: #00ffff; }
+.update-btn:disabled { opacity: .5; cursor: not-allowed; }
+.update-status { font-size: 11px; color: #4a8fa8; margin-top: 4px; }
+
 .wrap { max-width: 1400px; margin: 0 auto; padding: 1.5rem 1rem; }
 .condition {
   background: #001a22; border: 1px solid #00ccff22;
@@ -271,10 +305,109 @@ tr:hover td { background: #002233aa; }
   .topbar { flex-direction: column; gap: .5rem; }
   .table-wrap table { display: none; }
   .card-list { display: flex !important; }
+  .index-bar { gap: 1rem; padding: .4rem 1rem; }
 }
 @media (max-width: 480px) {
   .stats { grid-template-columns: repeat(2, 1fr); }
 }
+"""
+
+JS = """
+// ── 即時指數（Yahoo Finance via allorigins proxy）──
+const INDICES = [
+  { sym: '%5ETWII',  name: '台股加權' },
+  { sym: '%5EDJI',   name: '道瓊'     },
+  { sym: '%5EIXIC',  name: 'NASDAQ'   },
+  { sym: '%5ESOX',   name: '費城半導' },
+  { sym: '%5EVIX',   name: 'VIX'      },
+  { sym: 'DX-Y.NYB', name: '美元指數' },
+];
+
+async function fetchIndex(sym, name) {
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=2d`;
+  const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+  try {
+    const res  = await fetch(proxy, { signal: AbortSignal.timeout(8000) });
+    const json = await res.json();
+    const data = JSON.parse(json.contents);
+    const meta = data.chart.result[0].meta;
+    const price = meta.regularMarketPrice;
+    const prev  = meta.chartPreviousClose;
+    const chg   = price - prev;
+    const pct   = (chg / prev * 100);
+    const color = chg >= 0 ? '#00ff88' : '#ff4466';
+    const sign  = chg >= 0 ? '+' : '';
+    document.getElementById('idx-' + sym).innerHTML =
+      `<div class="idx-name">${name}</div>` +
+      `<div class="idx-val">${price.toLocaleString(undefined,{maximumFractionDigits:2})}</div>` +
+      `<div class="idx-chg" style="color:${color}">${sign}${pct.toFixed(2)}%</div>`;
+  } catch(e) {
+    document.getElementById('idx-' + sym).innerHTML =
+      `<div class="idx-name">${name}</div><div class="idx-val" style="color:#4a8fa8">—</div>`;
+  }
+}
+
+function loadIndices() {
+  INDICES.forEach(i => fetchIndex(i.sym, i.name));
+}
+
+// ── 手動更新（觸發 GitHub Actions）──
+async function triggerUpdate() {
+  const btn    = document.getElementById('update-btn');
+  const status = document.getElementById('update-status');
+  const token  = document.getElementById('pat-input').value.trim();
+
+  if (!token) {
+    status.textContent = '⚠ 請先輸入 GitHub Token';
+    status.style.color = '#ffcc00';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ 更新中...';
+  status.textContent = '正在觸發 GitHub Actions...';
+  status.style.color = '#4a8fa8';
+
+  try {
+    const res = await fetch(
+      'https://api.github.com/repos/YuanJieL/taiwan-stock-screener/actions/workflows/daily_screener.yml/dispatches',
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ref: 'main' }),
+      }
+    );
+    if (res.status === 204) {
+      status.textContent = '✅ 已觸發！約 15~30 分鐘後資料更新，請重新整理頁面。';
+      status.style.color = '#00ff88';
+      btn.textContent = '✅ 已觸發';
+      localStorage.setItem('pat_token', token);
+    } else {
+      const err = await res.json();
+      status.textContent = `❌ 失敗：${err.message || res.status}`;
+      status.style.color = '#ff4466';
+      btn.disabled = false;
+      btn.textContent = '🔄 手動更新';
+    }
+  } catch(e) {
+    status.textContent = `❌ 網路錯誤：${e.message}`;
+    status.style.color = '#ff4466';
+    btn.disabled = false;
+    btn.textContent = '🔄 手動更新';
+  }
+}
+
+// 頁面載入
+window.addEventListener('DOMContentLoaded', () => {
+  loadIndices();
+  // 還原 Token
+  const saved = localStorage.getItem('pat_token');
+  if (saved) document.getElementById('pat-input').value = saved;
+});
 """
 
 
@@ -328,6 +461,24 @@ def build_html(data):
             f'<div class="card-list">{cards}</div>'
         )
 
+    # 指數橫幅 HTML
+    index_items = ""
+    indices = [
+        ("%5ETWII",  "台股加權"),
+        ("%5EDJI",   "道瓊"),
+        ("%5EIXIC",  "NASDAQ"),
+        ("%5ESOX",   "費城半導"),
+        ("%5EVIX",   "VIX"),
+        ("DX-Y.NYB", "美元指數"),
+    ]
+    for sym, name in indices:
+        index_items += (
+            f'<div class="index-item" id="idx-{sym}">'
+            f'<div class="idx-name">{name}</div>'
+            f'<div class="idx-val" style="color:#4a8fa8;">載入中...</div>'
+            f'</div>'
+        )
+
     stats_html = (
         '<div class="stats">'
         f'<div class="stat"><div class="num" style="color:#00ff88;">{passed_count}</div><div class="lbl">✅ 回測通過</div></div>'
@@ -352,6 +503,9 @@ def build_html(data):
         "</head>\n"
         "<body>\n"
         '<div class="scanline"></div>\n'
+        # 指數橫幅
+        f'<div class="index-bar">{index_items}</div>\n'
+        # 頂部
         '<div class="topbar">\n'
         '  <div class="topbar-left">\n'
         "    <h1>⚡ AI 法人戰情室</h1>\n"
@@ -361,6 +515,14 @@ def build_html(data):
         f"    <div>📅 資料日期：<strong>{date_fmt}</strong></div>\n"
         f"    <div>📅 回測基準：<strong>{hist_fmt}</strong></div>\n"
         f"    <div>🕐 更新：<strong>{gen_fmt}</strong></div>\n"
+        # 手動更新區塊
+        '    <div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;">\n'
+        '      <input id="pat-input" type="password" placeholder="GitHub Token" '
+        '        style="background:#001a22;border:1px solid #00ccff33;color:#c0d8e0;'
+        '        padding:4px 8px;border-radius:4px;font-size:11px;width:160px;outline:none;"/>\n'
+        '      <button id="update-btn" class="update-btn" onclick="triggerUpdate()">🔄 手動更新</button>\n'
+        "    </div>\n"
+        '    <div id="update-status" class="update-status"></div>\n'
         "  </div>\n"
         "</div>\n"
         '<div class="wrap">\n'
@@ -375,12 +537,13 @@ def build_html(data):
         "  </div>\n"
         '  <div class="footer">\n'
         "    ⚠ 本頁面資訊僅供參考，不構成任何投資建議。AI評分為量化模型輸出，不保證未來績效。<br/>\n"
-        "    資料來源：臺灣證券交易所（TWSE）公開資訊。\n"
+        "    資料來源：臺灣證券交易所（TWSE）公開資訊。指數資料來源：Yahoo Finance。\n"
         '    <a href="data/latest.json" target="_blank">📄 JSON</a> &nbsp;|&nbsp;\n'
         '    <a href="https://www.twse.com.tw" target="_blank">TWSE</a> &nbsp;|&nbsp;\n'
         '    <a href="https://github.com/YuanJieL/taiwan-stock-screener" target="_blank">GitHub</a>\n'
         "  </div>\n"
         "</div>\n"
+        f"<script>{JS}</script>\n"
         "</body>\n"
         "</html>\n"
     )
