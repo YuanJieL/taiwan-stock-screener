@@ -1,6 +1,6 @@
 """
 AI 法人戰情室 — build_html.py
-科技風 UI + AI 評分 + 多空燈號 + 回測統計
+科技風 UI + AI 評分 + 多空燈號 + 回測統計 + 手機卡片版
 """
 
 import json
@@ -97,6 +97,54 @@ def build_row(s):
         f'<td style="font-size:12px;">{signal}</td>',
     ]
     return "<tr>" + "".join(cells) + "</tr>"
+
+
+def build_card(s):
+    bt          = s.get("backtest", {})
+    passed      = bt.get("passed_15pct")
+    gain_future = bt.get("gain_after_20d")
+    buy_price   = bt.get("buy_price", s.get("close"))
+    price_now   = bt.get("price_after_20d")
+    signal_date = fmt_date(s.get("signal_date", ""))
+    ai_score    = s.get("ai_score", 0)
+    signal      = s.get("signal", "—")
+
+    if passed is True:
+        result = '<span style="color:#00ff88;font-weight:700;">✅ 通過</span>'
+        border = "#00ff8844"
+    elif passed is False:
+        result = '<span style="color:#ff4466;font-weight:700;">❌ 未達</span>'
+        border = "#ff446644"
+    else:
+        result = '<span style="color:#ffcc00;font-weight:700;">⏳ 觀察</span>'
+        border = "#ffcc0044"
+
+    buy_str = f"{buy_price:,.1f}" if buy_price else "—"
+    now_str = f"{price_now:,.1f}" if price_now else "—"
+    gc_20d  = gain_color(s["gain_20d"])
+    gc_fut  = gain_color(gain_future)
+
+    return (
+        f'<div class="stock-card" style="border-color:{border};">'
+        f'<div class="card-header">'
+        f'<div><span class="code-chip">{s["code"]}</span>'
+        f'<span class="card-name" style="margin-left:8px;">{s["name"]}</span></div>'
+        f'<span style="font-size:12px;">{signal}</span>'
+        f'</div>'
+        f'<div class="card-grid">'
+        f'<div class="card-item"><div class="lbl">買入價</div><div class="val" style="color:#7dd3fc;">{buy_str}</div></div>'
+        f'<div class="card-item"><div class="lbl">現價</div><div class="val">{now_str}</div></div>'
+        f'<div class="card-item"><div class="lbl">近20日漲幅</div><div class="val" style="color:{gc_20d};">{fmt_gain(s["gain_20d"])}</div></div>'
+        f'<div class="card-item"><div class="lbl">法人占比</div><div class="val" style="color:#66aaff;">{s["inst_ratio"]:.1f}%</div></div>'
+        f'<div class="card-item"><div class="lbl">回測漲幅</div><div class="val" style="color:{gc_fut};">{fmt_gain(gain_future)}</div></div>'
+        f'<div class="card-item"><div class="lbl">訊號日</div><div class="val" style="color:#4a8fa8;font-size:11px;">{signal_date}</div></div>'
+        f'</div>'
+        f'<div class="card-footer">'
+        f'<div style="flex:1;margin-right:12px;">{ai_bar(ai_score)}</div>'
+        f'<div>{result}</div>'
+        f'</div>'
+        f'</div>'
+    )
 
 
 CSS = """
@@ -196,9 +244,33 @@ tr:hover td { background: #002233aa; }
   font-size: .72rem; color: #2a5a6a; line-height: 1.9;
   margin-top: 1rem; border-top: 1px solid #00ccff11; padding-top: 1rem;
 }
+.card-list { display: none; flex-direction: column; gap: 10px; padding: 12px; }
+.stock-card {
+  background: #002233;
+  border: 1px solid #00ccff22;
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.stock-card .card-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.stock-card .card-name { font-size: 15px; font-weight: 600; color: #e0f0ff; }
+.stock-card .card-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 8px; margin-bottom: 8px;
+}
+.stock-card .card-item .lbl { font-size: 10px; color: #4a8fa8; margin-bottom: 2px; }
+.stock-card .card-item .val { font-size: 13px; font-weight: 600; }
+.stock-card .card-footer {
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid #00ccff11; padding-top: 8px; margin-top: 4px;
+}
 @media (max-width: 768px) {
   .stats { grid-template-columns: repeat(4, 1fr); }
   .topbar { flex-direction: column; gap: .5rem; }
+  .table-wrap table { display: none; }
+  .card-list { display: flex !important; }
 }
 @media (max-width: 480px) {
   .stats { grid-template-columns: repeat(2, 1fr); }
@@ -240,6 +312,7 @@ def build_html(data):
         body = '<div class="empty">今日無符合條件個股</div>'
     else:
         rows  = "\n".join(build_row(s) for s in stocks)
+        cards = "\n".join(build_card(s) for s in stocks)
         thead = (
             "<thead><tr>"
             "<th>代號</th><th>名稱</th><th>訊號日</th>"
@@ -252,6 +325,7 @@ def build_html(data):
             '<div class="table-wrap">'
             f"<table>{thead}<tbody>{rows}</tbody></table>"
             "</div>"
+            f'<div class="card-list">{cards}</div>'
         )
 
     stats_html = (
