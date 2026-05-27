@@ -1,227 +1,17 @@
 {
   "date": "20260526",
   "hist_date": "20260428",
-  "generated_at": "2026-05-27T07:08:27.429470+00:00",
+  "generated_at": "2026-05-27T08:28:33.531134+00:00",
   "status": "ok",
   "backtest_stats": {
-    "win_rate": 43.5,
-    "avg_return": 24.3,
-    "max_drawdown": -15.2,
-    "max_gain": 121.1,
-    "total": 23,
-    "passed": 10
+    "win_rate": null,
+    "avg_return": null,
+    "max_drawdown": null,
+    "max_gain": null,
+    "total": 0,
+    "passed": 0
   },
   "stocks": [
-    {
-      "code": "7769",
-      "name": "鴻勁            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 7800.0,
-      "gain_20d": 41.08,
-      "inst_net_shares": 399501,
-      "inst_ratio": 121.66,
-      "volume_shares": 328372,
-      "ai_score": 71.0,
-      "signal": "🟢 強力買進",
-      "backtest": {
-        "buy_price": 4945.0,
-        "price_after_20d": 7800.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 57.74,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 57.7%"
-      }
-    },
-    {
-      "code": "7610",
-      "name": "聯友金屬-創     ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 1230.0,
-      "gain_20d": 82.34,
-      "inst_net_shares": 54000,
-      "inst_ratio": 23.51,
-      "volume_shares": 229649,
-      "ai_score": 60.8,
-      "signal": "🟢 買進",
-      "backtest": {
-        "buy_price": 640.0,
-        "price_after_20d": 1230.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 92.19,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 92.2%"
-      }
-    },
-    {
-      "code": "2464",
-      "name": "盟立            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 177.0,
-      "gain_20d": 68.4,
-      "inst_net_shares": 6619976,
-      "inst_ratio": 20.35,
-      "volume_shares": 32535439,
-      "ai_score": 54.5,
-      "signal": "🟢 買進",
-      "backtest": {
-        "buy_price": 113.5,
-        "price_after_20d": 177.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 55.95,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 55.9%"
-      }
-    },
-    {
-      "code": "2327",
-      "name": "國巨*           ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 701.0,
-      "gain_20d": 30.18,
-      "inst_net_shares": 8143255,
-      "inst_ratio": 32.61,
-      "volume_shares": 24969369,
-      "ai_score": 54.1,
-      "signal": "🟢 買進",
-      "backtest": {
-        "buy_price": 317.0,
-        "price_after_20d": 701.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 121.14,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 121.1%"
-      }
-    },
-    {
-      "code": "2308",
-      "name": "台達電          ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 2520.0,
-      "gain_20d": 56.88,
-      "inst_net_shares": 3806543,
-      "inst_ratio": 27.39,
-      "volume_shares": 13897689,
-      "ai_score": 52.1,
-      "signal": "🟢 買進",
-      "backtest": {
-        "buy_price": 2165.0,
-        "price_after_20d": 2520.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 16.4,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 16.4%"
-      }
-    },
-    {
-      "code": "2454",
-      "name": "聯發科          ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 4640.0,
-      "gain_20d": 75.17,
-      "inst_net_shares": 2362128,
-      "inst_ratio": 12.96,
-      "volume_shares": 18220840,
-      "ai_score": 50.4,
-      "signal": "🟢 買進",
-      "backtest": {
-        "buy_price": 2610.0,
-        "price_after_20d": 4640.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 77.78,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 77.8%"
-      }
-    },
-    {
-      "code": "6902",
-      "name": "GOGOLOOK        ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 135.5,
-      "gain_20d": 38.7,
-      "inst_net_shares": 79000,
-      "inst_ratio": 17.37,
-      "volume_shares": 454912,
-      "ai_score": 44.2,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 102.5,
-        "price_after_20d": 135.5,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 32.2,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 32.2%"
-      }
-    },
-    {
-      "code": "6197",
-      "name": "佳必琪          ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 281.5,
-      "gain_20d": 31.23,
-      "inst_net_shares": 798198,
-      "inst_ratio": 13.62,
-      "volume_shares": 5861480,
-      "ai_score": 39.2,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 208.0,
-        "price_after_20d": 281.5,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 35.34,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 35.3%"
-      }
-    },
-    {
-      "code": "6166",
-      "name": "凌華            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 136.0,
-      "gain_20d": 30.21,
-      "inst_net_shares": 330884,
-      "inst_ratio": 12.02,
-      "volume_shares": 2753798,
-      "ai_score": 37.7,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 75.0,
-        "price_after_20d": 136.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 81.33,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 81.3%"
-      }
-    },
-    {
-      "code": "2360",
-      "name": "致茂            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 2625.0,
-      "gain_20d": 44.71,
-      "inst_net_shares": 349655,
-      "inst_ratio": 13.26,
-      "volume_shares": 2636485,
-      "ai_score": 37.5,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 2120.0,
-        "price_after_20d": 2625.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 23.82,
-        "passed_15pct": true,
-        "note": "買入後20日 ✅ 上漲 23.8%"
-      }
-    },
     {
       "code": "2492",
       "name": "華新科          ",
@@ -299,6 +89,27 @@
       "signal": "🟡 觀察",
       "backtest": {
         "buy_price": 55.6,
+        "price_after_20d": null,
+        "date_after_20d": null,
+        "gain_after_20d": null,
+        "passed_15pct": null,
+        "note": "⏳ 觀察中（今日新訊號）"
+      }
+    },
+    {
+      "code": "3209",
+      "name": "全科            ",
+      "market": "上市",
+      "signal_date": "20260526",
+      "close": 81.4,
+      "gain_20d": 52.15,
+      "inst_net_shares": 2125594,
+      "inst_ratio": 36.93,
+      "volume_shares": 5756283,
+      "ai_score": 53.4,
+      "signal": "🟡 觀察",
+      "backtest": {
+        "buy_price": 81.4,
         "price_after_20d": null,
         "date_after_20d": null,
         "gain_after_20d": null,
@@ -425,27 +236,6 @@
       "signal": "🟡 觀察",
       "backtest": {
         "buy_price": 266.0,
-        "price_after_20d": null,
-        "date_after_20d": null,
-        "gain_after_20d": null,
-        "passed_15pct": null,
-        "note": "⏳ 觀察中（今日新訊號）"
-      }
-    },
-    {
-      "code": "6706",
-      "name": "惠特            ",
-      "market": "上市",
-      "signal_date": "20260526",
-      "close": 216.5,
-      "gain_20d": 61.57,
-      "inst_net_shares": 3033007,
-      "inst_ratio": 23.61,
-      "volume_shares": 12845565,
-      "ai_score": 45.3,
-      "signal": "🟡 觀察",
-      "backtest": {
-        "buy_price": 216.5,
         "price_after_20d": null,
         "date_after_20d": null,
         "gain_after_20d": null,
@@ -685,27 +475,6 @@
       }
     },
     {
-      "code": "2312",
-      "name": "金寶            ",
-      "market": "上市",
-      "signal_date": "20260526",
-      "close": 40.0,
-      "gain_20d": 45.99,
-      "inst_net_shares": 28357859,
-      "inst_ratio": 17.11,
-      "volume_shares": 165750495,
-      "ai_score": 35.9,
-      "signal": "🟡 觀察",
-      "backtest": {
-        "buy_price": 40.0,
-        "price_after_20d": null,
-        "date_after_20d": null,
-        "gain_after_20d": null,
-        "passed_15pct": null,
-        "note": "⏳ 觀察中（今日新訊號）"
-      }
-    },
-    {
       "code": "6285",
       "name": "啟碁            ",
       "market": "上市",
@@ -934,279 +703,6 @@
         "gain_after_20d": null,
         "passed_15pct": null,
         "note": "⏳ 觀察中（今日新訊號）"
-      }
-    },
-    {
-      "code": "3605",
-      "name": "宏致            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 78.3,
-      "gain_20d": 59.82,
-      "inst_net_shares": 4709375,
-      "inst_ratio": 93.11,
-      "volume_shares": 5057645,
-      "ai_score": 56.0,
-      "signal": "🟠 留意",
-      "backtest": {
-        "buy_price": 87.1,
-        "price_after_20d": 78.3,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -10.1,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -10.1%"
-      }
-    },
-    {
-      "code": "2460",
-      "name": "建通            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 31.95,
-      "gain_20d": 45.23,
-      "inst_net_shares": 478300,
-      "inst_ratio": 59.49,
-      "volume_shares": 804025,
-      "ai_score": 52.1,
-      "signal": "🟠 留意",
-      "backtest": {
-        "buy_price": 35.8,
-        "price_after_20d": 31.95,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -10.75,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -10.8%"
-      }
-    },
-    {
-      "code": "8103",
-      "name": "瀚荃            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 106.0,
-      "gain_20d": 60.46,
-      "inst_net_shares": 872301,
-      "inst_ratio": 41.17,
-      "volume_shares": 2118989,
-      "ai_score": 49.1,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 125.0,
-        "price_after_20d": 106.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -15.2,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -15.2%"
-      }
-    },
-    {
-      "code": "2345",
-      "name": "智邦            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 2620.0,
-      "gain_20d": 50.99,
-      "inst_net_shares": 1137498,
-      "inst_ratio": 28.78,
-      "volume_shares": 3952450,
-      "ai_score": 44.6,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 2280.0,
-        "price_after_20d": 2620.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 14.91,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 14.9%"
-      }
-    },
-    {
-      "code": "3661",
-      "name": "世芯-KY         ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 4500.0,
-      "gain_20d": 66.4,
-      "inst_net_shares": 478491,
-      "inst_ratio": 18.93,
-      "volume_shares": 2528117,
-      "ai_score": 40.8,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 4135.0,
-        "price_after_20d": 4500.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 8.83,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 8.8%"
-      }
-    },
-    {
-      "code": "6205",
-      "name": "詮欣            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 81.0,
-      "gain_20d": 70.28,
-      "inst_net_shares": 491637,
-      "inst_ratio": 20.1,
-      "volume_shares": 2445391,
-      "ai_score": 34.8,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 86.5,
-        "price_after_20d": 81.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -6.36,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -6.4%"
-      }
-    },
-    {
-      "code": "6515",
-      "name": "穎崴            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 9795.0,
-      "gain_20d": 45.24,
-      "inst_net_shares": 59254,
-      "inst_ratio": 25.53,
-      "volume_shares": 232078,
-      "ai_score": 32.5,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 10385.0,
-        "price_after_20d": 9795.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -5.68,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -5.7%"
-      }
-    },
-    {
-      "code": "4540",
-      "name": "全球傳動        ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 67.2,
-      "gain_20d": 66.46,
-      "inst_net_shares": 1636455,
-      "inst_ratio": 13.89,
-      "volume_shares": 11779254,
-      "ai_score": 28.8,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 68.5,
-        "price_after_20d": 67.2,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -1.9,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -1.9%"
-      }
-    },
-    {
-      "code": "2337",
-      "name": "旺宏            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 155.5,
-      "gain_20d": 33.33,
-      "inst_net_shares": 29086150,
-      "inst_ratio": 11.98,
-      "volume_shares": 242819740,
-      "ai_score": 26.5,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 154.0,
-        "price_after_20d": 155.5,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 0.97,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 1.0%"
-      }
-    },
-    {
-      "code": "3057",
-      "name": "喬鼎            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 20.25,
-      "gain_20d": 32.57,
-      "inst_net_shares": 43000,
-      "inst_ratio": 12.15,
-      "volume_shares": 353871,
-      "ai_score": 26.4,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 20.15,
-        "price_after_20d": 20.25,
-        "date_after_20d": "20260526",
-        "gain_after_20d": 0.5,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 0.5%"
-      }
-    },
-    {
-      "code": "1711",
-      "name": "永光            ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 51.0,
-      "gain_20d": 55.43,
-      "inst_net_shares": 2425271,
-      "inst_ratio": 13.26,
-      "volume_shares": 18293080,
-      "ai_score": 25.4,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 56.5,
-        "price_after_20d": 51.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -9.73,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -9.7%"
-      }
-    },
-    {
-      "code": "6533",
-      "name": "晶心科          ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 228.0,
-      "gain_20d": 32.85,
-      "inst_net_shares": 147193,
-      "inst_ratio": 17.51,
-      "volume_shares": 840485,
-      "ai_score": 22.8,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 228.5,
-        "price_after_20d": 228.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -0.22,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -0.2%"
-      }
-    },
-    {
-      "code": "6933",
-      "name": "AMAX-KY         ",
-      "market": "上市",
-      "signal_date": "20260428",
-      "close": 164.0,
-      "gain_20d": 34.29,
-      "inst_net_shares": 27006,
-      "inst_ratio": 11.45,
-      "volume_shares": 235791,
-      "ai_score": 18.3,
-      "signal": "🔴 迴避",
-      "backtest": {
-        "buy_price": 164.5,
-        "price_after_20d": 164.0,
-        "date_after_20d": "20260526",
-        "gain_after_20d": -0.3,
-        "passed_15pct": false,
-        "note": "買入後20日 ❌ 未達 -0.3%"
       }
     }
   ]
