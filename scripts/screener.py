@@ -1,10 +1,10 @@
 """
-台股三大法人選股篩選器（上市版 v4）
+台股三大法人選股篩選器（AI 法人戰情室版）
 篩選條件：
   1. 法人淨買量 / 當日總成交量 > 10%
   2. 近20個交易日漲幅 > 30%
   3. 排除 ETF（含槓桿/反向）
-回測：20交易日前訊號，遇假日自動往後找最近交易日
+新增：AI 評分、多空燈號、回測統計
 資料來源：TWSE 公開資料 API
 """
 
@@ -23,18 +23,52 @@ HEADERS = {
     )
 }
 
-MAX_CANDIDATES = 50
-
 ETF_NAME_KEYWORDS = ["ETF","正二","反一","反向","槓桿","基金",
                      "高股息","ESG","永續","債券","期貨","商品"]
 
 
 def is_etf(code: str, name: str) -> bool:
-    code = str(code).strip()
-    name = str(name).strip()
-    if len(code) > 4:
+    if len(str(code).strip()) > 4:
         return True
-    return any(kw in name for kw in ETF_NAME_KEYWORDS)
+    return any(kw in str(name) for kw in ETF_NAME_KEYWORDS)
+
+
+def calc_ai_score(inst_ratio: float, gain_20d: float, gain_future: float | None) -> float:
+    """
+    AI 多因子評分（0~100）
+    法人強度 40% + 趨勢動能 40% + 回測績效 20%
+    """
+    # 法人強度（上限 50%占比 → 滿分）
+    inst_score = min(inst_ratio / 50 * 40, 40)
+    # 趨勢動能（上限 150%漲幅 → 滿分）
+    trend_score = min(gain_20d / 150 * 40, 40)
+    # 回測績效
+    if gain_future is None:
+        perf_score = 10  # 觀察中給基礎分
+    elif gain_future >= 30:
+        perf_score = 20
+    elif gain_future >= 15:
+        perf_score = 15
+    elif gain_future >= 0:
+        perf_score = 8
+    else:
+        perf_score = 0
+    return round(inst_score + trend_score + perf_score, 1)
+
+
+def calc_signal(ai_score: float, passed: bool | None) -> str:
+    """多空燈號"""
+    if passed is True and ai_score >= 70:
+        return "🟢 強力買進"
+    if passed is True and ai_score >= 50:
+        return "🟢 買進"
+    if passed is None and ai_score >= 60:
+        return "🟡 強力觀察"
+    if passed is None:
+        return "🟡 觀察"
+    if passed is False and ai_score >= 50:
+        return "🟠 留意"
+    return "🔴 迴避"
 
 
 def get_prev_trading_day(base_date=None, offset=1) -> str:
@@ -61,7 +95,6 @@ def find_valid_trading_day(date_str: str, max_forward_days: int = 7) -> str:
             if i > 0:
                 print(f"  歷史日期 {date_str} 無資料，改用 {cand_str}")
             return cand_str
-    print(f"  找不到有效交易日（{date_str} 往後 {max_forward_days} 天皆無資料）")
     return date_str
 
 
@@ -113,7 +146,6 @@ def twse_volume(date_str: str) -> pd.DataFrame:
         r = requests.get(url, headers=HEADERS, timeout=15)
         data = r.json()
         if data.get("stat") != "OK":
-            print(f"[TWSE vol] stat={data.get('stat')}")
             return pd.DataFrame()
         df = pd.DataFrame(data["data"], columns=data["fields"])
         col_map = {}
@@ -209,7 +241,7 @@ def get_candidates(inst_df: pd.DataFrame, vol_df: pd.DataFrame) -> pd.DataFrame:
 def screen_with_cache(candidates: pd.DataFrame, price_cache: dict,
                       current_cache: dict, hist_mode: bool) -> list:
     results = []
-    for _, row in candidates.head(MAX_CANDIDATES).iterrows():
+    for _, row in candidates.iterrows():
         code = str(row["code"]).strip()
         name = row.get("name", "")
 
@@ -244,7 +276,10 @@ def screen_with_cache(candidates: pd.DataFrame, price_cache: dict,
             passed = None
             note = "⏳ 觀察中（今日新訊號）"
 
-        print(f"  ✅ {code} {name}  近20日+{gain_20d:.1f}%  法人{row['inst_ratio']:.1f}%  {note}")
+        ai_score = calc_ai_score(row["inst_ratio"], gain_20d, gain_future)
+        signal = calc_signal(ai_score, passed)
+
+        print(f"  ✅ {code} {name}  近20日+{gain_20d:.1f}%  法人{row['inst_ratio']:.1f}%  AI:{ai_score}  {signal}")
 
         results.append({
             "code": code,
@@ -258,8 +293,33 @@ def screen_with_cache(candidates: pd.DataFrame, price_cache: dict,
             "gain_future": round(gain_future, 2) if gain_future is not None else None,
             "passed": passed,
             "note": note,
+            "ai_score": ai_score,
+            "signal": signal,
         })
     return results
+
+
+def calc_backtest_stats(hist_results: list) -> dict:
+    """計算回測統計：勝率、平均報酬、最大回撤、最大漲幅"""
+    gains = [s["gain_future"] for s in hist_results if s["gain_future"] is not None]
+    if not gains:
+        return {
+            "win_rate": None,
+            "avg_return": None,
+            "max_drawdown": None,
+            "max_gain": None,
+            "total": 0,
+            "passed": 0,
+        }
+    passed = sum(1 for g in gains if g >= 15)
+    return {
+        "win_rate": round(passed / len(gains) * 100, 1),
+        "avg_return": round(sum(gains) / len(gains), 1),
+        "max_drawdown": round(min(gains), 1),
+        "max_gain": round(max(gains), 1),
+        "total": len(gains),
+        "passed": passed,
+    }
 
 
 def run_screener(date_str: str | None = None) -> dict:
@@ -308,6 +368,11 @@ def run_screener(date_str: str | None = None) -> dict:
 
     print(f"歷史符合條件：{len(hist_results)} 檔\n")
 
+    # ── 回測統計 ──
+    stats = calc_backtest_stats(hist_results)
+    print(f"📊 回測統計：勝率 {stats['win_rate']}%  平均報酬 {stats['avg_return']}%  "
+          f"最大回撤 {stats['max_drawdown']}%  最大漲幅 {stats['max_gain']}%")
+
     # ── 整合 ──
     for s in today_results:
         all_stocks.append({
@@ -318,6 +383,8 @@ def run_screener(date_str: str | None = None) -> dict:
             "inst_net_shares": s["inst_net_shares"],
             "inst_ratio": s["inst_ratio"],
             "volume_shares": s["volume_shares"],
+            "ai_score": s["ai_score"],
+            "signal": s["signal"],
             "backtest": {
                 "buy_price": s["buy_price"],
                 "price_after_20d": None,
@@ -337,6 +404,8 @@ def run_screener(date_str: str | None = None) -> dict:
             "inst_net_shares": s["inst_net_shares"],
             "inst_ratio": s["inst_ratio"],
             "volume_shares": s["volume_shares"],
+            "ai_score": s["ai_score"],
+            "signal": s["signal"],
             "backtest": {
                 "buy_price": s["buy_price"],
                 "price_after_20d": s["price_now"],
@@ -349,18 +418,18 @@ def run_screener(date_str: str | None = None) -> dict:
 
     def sort_key(x):
         p = x["backtest"]["passed_15pct"]
-        if p is True:  return (0, -x["gain_20d"])
-        if p is None:  return (1, -x["gain_20d"])
-        return (2, -x["gain_20d"])
+        if p is True:  return (0, -x["ai_score"])
+        if p is None:  return (1, -x["ai_score"])
+        return (2, -x["ai_score"])
 
     all_stocks.sort(key=sort_key)
-    passed_count = len([s for s in all_stocks if s["backtest"]["passed_15pct"] is True])
 
     output = {
         "date": date_str,
         "hist_date": hist_date_str,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "status": "ok",
+        "backtest_stats": stats,
         "stocks": all_stocks,
     }
 
@@ -368,7 +437,7 @@ def run_screener(date_str: str | None = None) -> dict:
     with open("data/latest.json", "w", encoding="utf-8") as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ 回測通過：{passed_count} 檔　共 {len(all_stocks)} 檔 → data/latest.json")
+    print(f"\n✅ 回測通過：{stats['passed']} 檔　共 {len(all_stocks)} 檔 → data/latest.json")
     return output
 
 
