@@ -1,7 +1,7 @@
 {
   "date": "20260605",
   "hist_date": "20260508",
-  "generated_at": "2026-06-06T04:57:41.863566+00:00",
+  "generated_at": "2026-06-07T11:32:26.087631+00:00",
   "status": "ok",
   "backtest_stats": {
     "win_rate": null,
@@ -11,5 +11,111 @@
     "total": 0,
     "passed": 0
   },
-  "stocks": []
+  "stocks": [
+    {
+      "code": "2492",
+      "name": "華新科          ",
+      "market": "上市",
+      "signal_date": "20260605",
+      "close": 416.0,
+      "gain_20d": 166.67,
+      "inst_net_shares": 2197548,
+      "inst_ratio": 49.25,
+      "volume_shares": 4462116,
+      "ai_score": 89.4,
+      "signal": "🟡 強力觀察",
+      "backtest": {
+        "buy_price": 416.0,
+        "price_after_20d": null,
+        "date_after_20d": null,
+        "gain_after_20d": null,
+        "passed_15pct": null,
+        "note": "⏳ 觀察中（今日新訊號）"
+      }
+    },
+    {
+      "code": "6890",
+      "name": "來億-KY         ",
+      "market": "上市",
+      "signal_date": "20260605",
+      "close": 242.5,
+      "gain_20d": 57.47,
+      "inst_net_shares": 2089885,
+      "inst_ratio": 21.17,
+      "volume_shares": 9871425,
+      "ai_score": 42.3,
+      "signal": "🟡 觀察",
+      "backtest": {
+        "buy_price": 242.5,
+        "price_after_20d": null,
+        "date_after_20d": null,
+        "gain_after_20d": null,
+        "passed_15pct": null,
+        "note": "⏳ 觀察中（今日新訊號）"
+      }
+    },
+    {
+      "code": "3312",
+      "name": "弘憶股          ",
+      "market": "上市",
+      "signal_date": "20260605",
+      "close": 67.5,
+      "gain_20d": 61.68,
+      "inst_net_shares": 3695422,
+      "inst_ratio": 15.67,
+      "volume_shares": 23578483,
+      "ai_score": 39.0,
+      "signal": "🟡 觀察",
+      "backtest": {
+        "buy_price": 67.5,
+        "price_after_20d": null,
+        "date_after_20d": null,
+        "gain_after_20d": null,
+        "passed_15pct": null,
+        "note": "⏳ 觀察中（今日新訊號）"
+      }
+    },
+    {
+      "code": "2312",
+      "name": "金寶            ",
+      "market": "上市",
+      "signal_date": "20260605",
+      "close": 39.3,
+      "gain_20d": 40.61,
+      "inst_net_shares": 8780324,
+      "inst_ratio": 13.1,
+      "volume_shares": 67007859,
+      "ai_score": 31.3,
+      "signal": "🟡 觀察",
+      "backtest": {
+        "buy_price": 39.3,
+        "price_after_20d": null,
+        "date_after_20d": null,
+        "gain_after_20d": null,
+        "passed_15pct": null,
+        "note": "⏳ 觀察中（今日新訊號）"
+      }
+    },
+    {
+      "code": "2353",
+      "name": "宏碁            ",
+      "market": "上市",
+      "signal_date": "20260605",
+      "close": 38.4,
+      "gain_20d": 38.13,
+      "inst_net_shares": 9838391,
+      "inst_ratio": 11.3,
+      "volume_shares": 87069286,
+      "ai_score": 29.2,
+      "signal": "🟡 觀察",
+      "backtest": {
+        "buy_price": 38.4,
+        "price_after_20d": null,
+        "date_after_20d": null,
+        "gain_after_20d": null,
+        "passed_15pct": null,
+        "note": "⏳ 觀察中（今日新訊號）"
+      }
+    }
+  ]
 }
