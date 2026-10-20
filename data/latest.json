@@ -1,7 +1,7 @@
 {
-  "date": "20261016",
-  "hist_date": "20260918",
-  "generated_at": "2026-10-17T05:24:56.723236+00:00",
+  "date": "20261019",
+  "hist_date": "20260921",
+  "generated_at": "2026-10-20T05:45:55.575082+00:00",
   "status": "ok",
   "backtest_stats": {
     "win_rate": null,
